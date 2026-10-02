@@ -1,0 +1,46 @@
+# Environment Variables & Secret Files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencies
+node_modules/
+
+# Runtime Data Stores (Only public catalog & example templates allowed)
+data/*.json
+data/versions/
+data/backups/
+public/uploads/
+jmd/backend/data/*.json
+!jmd/backend/data/spare-parts.json
+!jmd/backend/data/price-list-meta.json
+!jmd/backend/data/*.example.json
+jmd/backend/data/versions/
+jmd/backend/data/backups/
+jmd/backend/uploads/*
+!jmd/backend/uploads/.gitkeep
+jmd/backend/backups/
+jmd/backend/data-imports/
+
+# Work Directories, Quarantines, Audits & Tooling
+archive/
+_quarantine/
+audit-output/
+edge-profile*/
+graphify-out/
+.agents/
+.vscode/
+
+# Large Binary Files (>25 MB)
+*.dmp
+*.rar
+*.zip
+*.log
+*.tmp
+*.xlsx
+
+# System & OS Artifacts
+.DS_Store
+Thumbs.db

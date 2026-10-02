@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JMD Admin — Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/css/admin.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="../config.js"></script>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="../assets/images/jmd-logo.png" alt="JMD" onerror="this.style.display='none'">
+      <div class="sidebar-brand-text"><strong>JMD Admin</strong><div class="sidebar-live-badge">Live</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="/admin/dashboard.html" class="nav-item"><span class="icon">📊</span> Dashboard</a>
+      <a href="/admin/editor.html" class="nav-item"><span class="icon">✏️</span> Page Editor</a>
+      <a href="/admin/pages.html" class="nav-item"><span class="icon">📄</span> Pages</a>
+      <div class="nav-section-label">Content</div>
+      <a href="/admin/leads.html" class="nav-item"><span class="icon">👥</span> Leads &amp; CRM</a>
+      <a href="/admin/media.html" class="nav-item"><span class="icon">🖼️</span> Media</a>
+      <a href="/admin/spare-parts.html" class="nav-item"><span class="icon">🔧</span> Spare Parts</a>
+      <div class="nav-section-label">Tools</div>
+      <a href="/admin/settings.html" class="nav-item"><span class="icon">⚙️</span> Settings</a>
+      <a href="/admin/analytics.html" class="nav-item active"><span class="icon">📈</span> Analytics</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info"><div class="admin-avatar">A</div><div><div class="admin-name">Administrator</div><div class="admin-role">Super Admin</div></div></div>
+      <button class="btn-logout" onclick="logout()">⏻ Logout</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <div class="topbar">
+      <span class="topbar-title">📈 Analytics</span>
+      <div class="topbar-actions">
+        <select id="date-range" class="topbar-select form-control" onchange="loadAnalytics()" title="Select date range" aria-label="Date range">
+          <option value="7">Last 7 days</option>
+          <option value="14">Last 14 days</option>
+          <option value="30">Last 30 days</option>
+        </select>
+        <button class="topbar-btn" onclick="loadAnalytics()">🔄 Refresh</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- Stats -->
+      <div class="stat-grid mb-24">
+        <div class="stat-card stat-visits"><div class="label">Total Visits</div><div class="value" id="an-total">—</div><div class="sub">All time</div><div class="icon-wrap">🌐</div></div>
+        <div class="stat-card stat-today"><div class="label">Unique Pages</div><div class="value" id="an-pages">—</div><div class="sub">Tracked pages</div><div class="icon-wrap">📄</div></div>
+        <div class="stat-card stat-leads"><div class="label">Avg/Day</div><div class="value" id="an-avg">—</div><div class="sub">In range</div><div class="icon-wrap">📊</div></div>
+        <div class="stat-card stat-unread"><div class="label">Peak Day</div><div class="value" id="an-peak">—</div><div class="sub" id="an-peak-date">—</div><div class="icon-wrap">🏆</div></div>
+      </div>
+
+      <!-- Charts -->
+      <div class="dash-row">
+        <div class="card">
+          <div class="card-header"><h3>📈 Daily Visits</h3></div>
+          <div class="chart-wrap"><canvas id="daily-chart"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>📄 Top Pages</h3></div>
+          <div class="chart-wrap"><canvas id="pages-chart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Devices / Referrers -->
+      <div class="dash-row">
+        <div class="card">
+          <div class="card-header"><h3>📱 Device Types</h3></div>
+          <div class="chart-wrap"><canvas id="device-chart"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>📋 Visit Log (Raw)</h3></div>
+          <div class="card-body max-h-240 scroll-y">
+            <table class="data-table">
+              <thead><tr><th>Page</th><th>Time</th></tr></thead>
+              <tbody id="visit-log"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/admin/js/api.js"></script>
+<script src="/admin/js/toast.js"></script>
+<script src="/admin/js/auth.js"></script>
+<script>
+let charts = {};
+
+async function loadAnalytics() {
+  try {
+    const days = document.getElementById('date-range')?.value || 7;
+    const data = await API.get(`/api/admin/analytics?days=${days}`);
+    const visits = data.visits || [];
+    const byDate = {};
+    const byPage = {};
+    let total = 0;
+    visits.forEach(v => {
+      const d = (v.timestamp || '').slice(0, 10);
+      byDate[d] = (byDate[d] || 0) + 1;
+      const p = v.url || v.path || '/';
+      byPage[p] = (byPage[p] || 0) + 1;
+      total++;
+    });
+    // Stats
+    document.getElementById('an-total').textContent = total.toLocaleString();
+    document.getElementById('an-pages').textContent = Object.keys(byPage).length;
+    const dates = Object.keys(byDate);
+    const avg = dates.length ? Math.round(total / dates.length) : 0;
+    document.getElementById('an-avg').textContent = avg;
+    const peakEntry = Object.entries(byDate).sort((a,b) => b[1]-a[1])[0];
+    if (peakEntry) { document.getElementById('an-peak').textContent = peakEntry[1]; document.getElementById('an-peak-date').textContent = peakEntry[0]; }
+
+    // Daily chart
+    const sortedDates = dates.sort();
+    drawBarChart('daily-chart', sortedDates.map(d => d.slice(5)), sortedDates.map(d => byDate[d]), '#6366f1');
+
+    // Pages chart (top 5)
+    const topPages = Object.entries(byPage).sort((a,b) => b[1]-a[1]).slice(0, 5);
+    drawHBarChart('pages-chart', topPages.map(p => p[0].slice(0,24)), topPages.map(p => p[1]));
+
+    // Devices (dummy split for now)
+    const mobile = visits.filter(v => (v.ua||'').match(/mobile|android|iphone/i)).length;
+    const desktop = total - mobile;
+    drawDoughnut('device-chart', ['Desktop','Mobile'], [desktop, mobile], ['#6366f1','#ec4899']);
+
+    // Visit log
+    const tbody = document.getElementById('visit-log');
+    if (tbody) {
+      tbody.replaceChildren();
+      visits.slice(-30).reverse().forEach(v => {
+        const tr = document.createElement('tr');
+        const tdUrl = document.createElement('td');
+        tdUrl.textContent = v.url || v.path || '/';
+        const tdDate = document.createElement('td');
+        tdDate.style.cssText = 'font-size:11px;color:var(--text3);';
+        tdDate.textContent = v.timestamp ? new Date(v.timestamp).toLocaleString('en-IN') : '—';
+        tr.append(tdUrl, tdDate);
+        tbody.appendChild(tr);
+      });
+    }
+  } catch { Toast.error('Failed to load analytics'); }
+}
+
+function drawBarChart(id, labels, data, color) {
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return;
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [{ label: 'Visits', data, backgroundColor: color+'99', borderColor: color, borderWidth: 2, borderRadius: 5 }] },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#a0a0c0',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#a0a0c0'},beginAtZero:true}} }
+  });
+}
+
+function drawHBarChart(id, labels, data) {
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return;
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [{ label: 'Views', data, backgroundColor: '#8b5cf699', borderColor: '#8b5cf6', borderWidth: 1, borderRadius: 3 }] },
+    options: { indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#a0a0c0',font:{size:10}}},y:{grid:{display:false},ticks:{color:'#a0a0c0',font:{size:10}}}} }
+  });
+}
+
+function drawDoughnut(id, labels, data, colors) {
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return;
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: 'transparent', borderWidth: 0 }] },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{color:'#a0a0c0',font:{size:12}}}} }
+  });
+}
+
+async function init(){ const ok = await checkAuth(); if(!ok) return; await loadAnalytics(); }
+init();
+</script>
+</body>
+</html>

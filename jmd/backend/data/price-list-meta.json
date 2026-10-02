@@ -1,0 +1,109 @@
+{
+  "sourceFile": "ALL_VEHICLES_PRICE_LIST_Retail_Main.xlsx",
+  "sourceSha256": "0A11B0A46C40D69F2B9806FC1B7F6D33A26D61DC7956BD632032BB72AD1A25A6",
+  "importedAt": "2026-10-02T11:33:45.926Z",
+  "counts": {
+    "excelTotalRows": 2992,
+    "separatorRows": 13,
+    "inputDataRows": 2978,
+    "uniquePartCodes": 1713,
+    "activeCatalogItems": 2964,
+    "addedFromOld": 0,
+    "removedFromOld": 0,
+    "flaggedItems": 56,
+    "holdListCount": 3,
+    "realStockKeptCount": 0
+  },
+  "models": [
+    {
+      "slug": "nexus",
+      "label": "Nexus",
+      "isCurrent": true,
+      "itemsCount": 274
+    },
+    {
+      "slug": "magnus-grand-max",
+      "label": "Magnus Grand MAX",
+      "isCurrent": true,
+      "itemsCount": 249
+    },
+    {
+      "slug": "magnus-ex",
+      "label": "Magnus EX",
+      "isCurrent": true,
+      "itemsCount": 280
+    },
+    {
+      "slug": "magnus-grand",
+      "label": "Magnus GRAND",
+      "isCurrent": true,
+      "itemsCount": 240
+    },
+    {
+      "slug": "magnus-neo",
+      "label": "Magnus Neo",
+      "isCurrent": true,
+      "itemsCount": 267
+    },
+    {
+      "slug": "reo-80",
+      "label": "Reo 80",
+      "isCurrent": true,
+      "itemsCount": 123
+    },
+    {
+      "slug": "reo-li",
+      "label": "Reo Li",
+      "isCurrent": true,
+      "itemsCount": 176
+    },
+    {
+      "slug": "primus",
+      "label": "Primus",
+      "isCurrent": false,
+      "itemsCount": 192
+    },
+    {
+      "slug": "zeal",
+      "label": "Zeal",
+      "isCurrent": false,
+      "itemsCount": 266
+    },
+    {
+      "slug": "magnus-pro",
+      "label": "MAGNUS PRO",
+      "isCurrent": false,
+      "itemsCount": 203
+    },
+    {
+      "slug": "magnus-60-2022",
+      "label": "MAGNUS 60 (2022)",
+      "isCurrent": false,
+      "itemsCount": 151
+    },
+    {
+      "slug": "magnus-60-2020",
+      "label": "MAGNUS 60 (2020)",
+      "isCurrent": false,
+      "itemsCount": 152
+    },
+    {
+      "slug": "v48-2022",
+      "label": "V48 2022",
+      "isCurrent": false,
+      "itemsCount": 148
+    },
+    {
+      "slug": "v48-li",
+      "label": "V48 Li",
+      "isCurrent": false,
+      "itemsCount": 122
+    },
+    {
+      "slug": "v48-la",
+      "label": "V48 LA",
+      "isCurrent": false,
+      "itemsCount": 121
+    }
+  ]
+}

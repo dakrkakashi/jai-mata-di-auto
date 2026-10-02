@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JMD Admin — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/css/admin.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="../config.js"></script>
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="../assets/images/jmd-logo.png" alt="JMD" onerror="this.style.display='none'">
+      <div class="sidebar-brand-text">
+        <strong>JMD Admin</strong>
+        <div class="sidebar-live-badge">Live</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="/admin/dashboard.html" class="nav-item active"><span class="icon">📊</span> Dashboard</a>
+      <a href="/admin/editor.html" class="nav-item"><span class="icon">✏️</span> Page Editor</a>
+      <a href="/admin/pages.html" class="nav-item"><span class="icon">📄</span> Pages</a>
+      <div class="nav-section-label">Content</div>
+      <a href="/admin/leads.html" class="nav-item" id="nav-leads"><span class="icon">👥</span> Leads &amp; CRM <span class="nav-badge hidden" id="unread-badge">0</span></a>
+      <a href="/admin/media.html" class="nav-item"><span class="icon">🖼️</span> Media</a>
+      <a href="/admin/spare-parts.html" class="nav-item"><span class="icon">🔧</span> Spare Parts</a>
+      <div class="nav-section-label">Tools</div>
+      <a href="/admin/settings.html" class="nav-item"><span class="icon">⚙️</span> Settings</a>
+      <a href="/admin/analytics.html" class="nav-item"><span class="icon">📈</span> Analytics</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info">
+        <div class="admin-avatar">A</div>
+        <div>
+          <div class="admin-name">Administrator</div>
+          <div class="admin-role">Super Admin</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="logout()">⏻ Logout</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+    <div class="topbar">
+      <span class="topbar-title">📊 Dashboard</span>
+      <div class="topbar-actions">
+        <div class="live-dot" title="Server connected"></div>
+        <span id="autosave-text" class="text-muted text-sm">All saved</span>
+        <button class="topbar-btn" onclick="window.open('/', '_blank')">👁 Preview Site</button>
+        <button class="topbar-btn primary" onclick="window.location.href='/admin/editor.html'">✏️ Edit Pages</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- Stat Cards -->
+      <div class="stat-grid mb-24" id="stat-grid">
+        <div class="stat-card stat-visits">
+          <div class="label">Total Visits</div>
+          <div class="value" id="stat-visits">—</div>
+          <div class="sub">All time</div>
+          <div class="icon-wrap">🌐</div>
+        </div>
+        <div class="stat-card stat-today">
+          <div class="label">Today's Visits</div>
+          <div class="value" id="stat-today">—</div>
+          <div class="sub">Live count</div>
+          <div class="icon-wrap">📈</div>
+        </div>
+        <div class="stat-card stat-leads">
+          <div class="label">Leads Today</div>
+          <div class="value" id="stat-leads">—</div>
+          <div class="sub" id="stat-leads-sub">This week: —</div>
+          <div class="icon-wrap">👥</div>
+        </div>
+        <div class="stat-card stat-unread">
+          <div class="label">Unread Leads</div>
+          <div class="value" id="stat-unread">—</div>
+          <div class="sub"><a href="/admin/leads.html" class="color-purple">View all →</a></div>
+          <div class="icon-wrap">📬</div>
+        </div>
+      </div>
+
+      <!-- Charts + Quick Actions -->
+      <div class="dash-row">
+        <div class="card">
+          <div class="card-header">
+            <h3>📈 Visits — Last 7 Days</h3>
+            <span class="text-muted text-sm">Daily visitor count</span>
+          </div>
+          <div class="chart-wrap"><canvas id="visits-chart"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>⚡ Quick Actions</h3></div>
+          <div class="card-body d-col">
+            <a href="/admin/editor.html" class="btn btn-secondary w-full">✏️ Open Page Editor</a>
+            <a href="/admin/leads.html" class="btn btn-secondary w-full">👥 View All Leads</a>
+            <a href="/admin/pages.html" class="btn btn-secondary w-full">➕ Manage Pages</a>
+            <a href="/admin/media.html" class="btn btn-secondary w-full">📤 Upload Media</a>
+            <button class="btn btn-secondary w-full" onclick="generateSitemap()">🗺 Generate Sitemap</button>
+            <button class="btn btn-secondary w-full" onclick="downloadBackup()">💾 Download Backup</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Leads + Activity -->
+      <div class="dash-row">
+        <div class="card">
+          <div class="card-header">
+            <h3>📬 Recent Enquiries</h3>
+            <a href="/admin/leads.html" class="btn btn-sm btn-secondary">View All</a>
+          </div>
+          <div id="dash-leads-list" class="pb-4"></div>
+        </div>
+        <div class="d-col">
+          <div class="card">
+            <div class="card-header"><h3>🕐 Recent Activity</h3></div>
+            <div class="card-body p-8-16 max-h-160 scroll-y" id="dash-activity">
+              <div class="text-muted text-sm">Loading…</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>✅ Quick Tasks</h3></div>
+            <div class="card-body">
+              <div class="todo-input-row">
+                <input type="text" id="todo-input" placeholder="Add a task…">
+                <button class="btn btn-sm btn-primary" onclick="addTodo()">Add</button>
+              </div>
+              <div id="todo-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Lead Modal -->
+<div class="modal-overlay" id="lead-modal">
+  <div class="modal lg">
+    <div class="modal-header">
+      <h2>📋 Lead Details</h2>
+      <button class="modal-close" onclick="closeModal('lead-modal')">✕</button>
+    </div>
+    <div id="lead-detail-body"></div>
+    <div class="modal-footer">
+      <select id="lead-status-select" class="lead-status-select" onchange="updateLeadStatus()" title="Update status" aria-label="Update lead status">
+        <option value="new">🆕 New</option>
+        <option value="contacted">📞 Contacted</option>
+        <option value="quoted">💬 Quoted</option>
+        <option value="converted">✅ Converted</option>
+        <option value="lost">❌ Lost</option>
+      </select>
+      <button class="btn btn-secondary" onclick="closeModal('lead-modal')">Close</button>
+      <button class="btn btn-success" onclick="whatsAppReplyLead()">💬 WhatsApp</button>
+      <button class="btn btn-danger" onclick="deleteCurrentLead()">🗑 Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="/admin/js/api.js"></script>
+<script src="/admin/js/toast.js"></script>
+<script src="/admin/js/auth.js"></script>
+<script src="/admin/js/leads.js"></script>
+<script src="/admin/js/settings.js"></script>
+<script>
+let visitChart;
+
+function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
+
+async function init() {
+  const ok = await checkAuth();
+  if (!ok) return;
+  await loadStats();
+  await loadDashLeads();
+  await loadActivity();
+  await loadTodos();
+  // Refresh every 60s
+  setInterval(loadStats, 60000);
+}
+
+async function loadStats() {
+  try {
+    const data = await API.get('/api/admin/stats');
+    document.getElementById('stat-visits').textContent = (data.totalVisits || 0).toLocaleString();
+    document.getElementById('stat-today').textContent = (data.todayVisits || 0).toLocaleString();
+    document.getElementById('stat-leads').textContent = (data.leadsToday || 0).toLocaleString();
+    document.getElementById('stat-leads-sub').textContent = `This week: ${data.leadsWeek || 0}`;
+    document.getElementById('stat-unread').textContent = (data.unreadLeads || 0).toLocaleString();
+    // Unread badge
+    const badge = document.getElementById('unread-badge');
+    if (badge) { badge.textContent = data.unreadLeads || 0; badge.classList.toggle('hidden', !data.unreadLeads); }
+    // Chart
+    if (data.visitChart) drawChart(data.visitChart);
+  } catch { }
+}
+
+function drawChart(chartData) {
+  const ctx = document.getElementById('visits-chart')?.getContext('2d');
+  if (!ctx) return;
+  const labels = chartData.map(d => {
+    const dt = new Date(d.date);
+    return dt.toLocaleDateString('en-IN', { weekday: 'short' });
+  });
+  const values = chartData.map(d => d.visits);
+  if (visitChart) visitChart.destroy();
+  visitChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Visits',
+        data: values,
+        backgroundColor: 'rgba(99,102,241,0.6)',
+        borderColor: '#6366f1',
+        borderWidth: 2,
+        borderRadius: 6,
+        hoverBackgroundColor: 'rgba(139,92,246,0.8)'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a0a0c0', font: { size: 11 } } },
+        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a0a0c0', font: { size: 11 } }, beginAtZero: true }
+      }
+    }
+  });
+}
+
+async function loadDashLeads() {
+  try {
+    const data = await API.get('/api/admin/leads');
+    allLeads = data.leads || data || [];
+    const container = document.getElementById('dash-leads-list');
+    if (!container) return;
+    container.replaceChildren();
+
+    const recent = allLeads.slice(0, 5);
+    if (!recent.length) {
+      const empty = document.createElement('div');
+      empty.className = 'empty-state';
+      const icon = document.createElement('div');
+      icon.className = 'icon';
+      icon.textContent = '📭';
+      const p = document.createElement('p');
+      p.textContent = 'No leads yet';
+      empty.append(icon, p);
+      container.appendChild(empty);
+      return;
+    }
+
+    const table = document.createElement('table');
+    table.className = 'data-table';
+    const thead = document.createElement('thead');
+    thead.innerHTML = '<tr><th>Name</th><th>Phone</th><th>Model</th><th>Status</th><th>Date</th></tr>';
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    recent.forEach(l => {
+      const tr = document.createElement('tr');
+      tr.style.cursor = 'pointer';
+      tr.onclick = () => openLead(l.id);
+
+      const tdName = document.createElement('td');
+      const strongName = document.createElement('strong');
+      strongName.textContent = l.name || '—';
+      tdName.appendChild(strongName);
+
+      const tdPhone = document.createElement('td');
+      tdPhone.textContent = l.phone || '—';
+
+      const tdModel = document.createElement('td');
+      tdModel.textContent = l.model || '—';
+
+      const tdStatus = document.createElement('td');
+      const statusBadge = document.createElement('span');
+      const st = l.status || 'new';
+      statusBadge.className = `badge badge-${st}`;
+      statusBadge.textContent = st;
+      tdStatus.appendChild(statusBadge);
+
+      const tdDate = document.createElement('td');
+      tdDate.style.cssText = 'font-size:11px;color:var(--text3);';
+      tdDate.textContent = l.timestamp || l.time ? new Date(l.timestamp || l.time).toLocaleDateString('en-IN') : '—';
+
+      tr.append(tdName, tdPhone, tdModel, tdStatus, tdDate);
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    container.appendChild(table);
+  } catch {}
+}
+
+async function loadActivity() {
+  try {
+    const data = await API.get('/api/admin/stats');
+    const el = document.getElementById('dash-activity');
+    if (!el) return;
+    el.replaceChildren();
+
+    const activities = data.activity || [];
+    if (!activities.length) {
+      const empty = document.createElement('div');
+      empty.className = 'text-muted text-sm';
+      empty.textContent = 'No activity yet';
+      el.appendChild(empty);
+      return;
+    }
+
+    activities.slice(0, 8).forEach(a => {
+      const item = document.createElement('div');
+      item.className = 'activity-item';
+
+      const dot = document.createElement('div');
+      dot.className = 'activity-dot';
+
+      const content = document.createElement('div');
+      content.className = 'activity-content';
+
+      const action = document.createElement('div');
+      action.className = 'activity-action';
+      action.textContent = a.action || 'Activity recorded';
+
+      const meta = document.createElement('div');
+      meta.className = 'activity-meta';
+      meta.textContent = a.time ? new Date(a.time).toLocaleString('en-IN') : '';
+
+      content.append(action, meta);
+      item.append(dot, content);
+      el.appendChild(item);
+    });
+  } catch {}
+}
+
+let todos = [];
+async function loadTodos() {
+  try {
+    todos = await API.get('/api/admin/todos') || [];
+    renderTodos();
+  } catch {}
+}
+function renderTodos() {
+  const el = document.getElementById('todo-list');
+  if (!el) return;
+  el.replaceChildren();
+
+  if (!todos.length) {
+    const empty = document.createElement('div');
+    empty.className = 'text-muted text-sm';
+    empty.textContent = 'No tasks. Add one above!';
+    el.appendChild(empty);
+    return;
+  }
+
+  todos.forEach(t => {
+    const item = document.createElement('div');
+    item.className = `todo-item ${t.done ? 'done' : ''}`;
+
+    const chk = document.createElement('input');
+    chk.type = 'checkbox';
+    chk.checked = Boolean(t.done);
+    chk.title = 'Toggle task';
+    chk.setAttribute('aria-label', t.text || 'Task');
+    chk.onchange = () => toggleTodo(t.id);
+
+    const span = document.createElement('span');
+    span.textContent = t.text || '';
+
+    const btn = document.createElement('button');
+    btn.textContent = '✕';
+    btn.title = 'Delete task';
+    btn.setAttribute('aria-label', `Delete ${t.text || 'task'}`);
+    btn.onclick = () => deleteTodo(t.id);
+
+    item.append(chk, span, btn);
+    el.appendChild(item);
+  });
+}
+async function addTodo() {
+  const input = document.getElementById('todo-input');
+  const text = input?.value?.trim();
+  if (!text) return;
+  const res = await API.post('/api/admin/todos', { action: 'add', text });
+  todos = res.todos || todos;
+  renderTodos();
+  input.value = '';
+}
+async function toggleTodo(id) {
+  const res = await API.post('/api/admin/todos', { action: 'toggle', id });
+  todos = res.todos || todos;
+  renderTodos();
+}
+async function deleteTodo(id) {
+  const res = await API.post('/api/admin/todos', { action: 'delete', id });
+  todos = res.todos || todos;
+  renderTodos();
+}
+
+
+async function downloadBackup() {
+  try {
+    const blob = await window.api('/api/admin/backup', { responseType: 'blob' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `jmd-backup-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    Toast.success('Backup downloaded!');
+  } catch { Toast.error('Backup failed'); }
+}
+
+init();
+</script>
+</body>
+</html>

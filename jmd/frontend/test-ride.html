@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Test Ride | Ampere Electric Scooters | Jai Mata Di Auto Loni</title>
+    
+    
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/inline-styles.css">
+    <style>
+        .test-ride-hero { background: radial-gradient(circle at 50% 20%, rgba(0, 245, 155, 0.22), transparent 70%), linear-gradient(135deg, #060911 0%, #0c1222 50%, #060911 100%); border-bottom: 1px solid rgba(0, 245, 155, 0.25); padding: 5rem 0 3rem; text-align:center; color:#fff; }
+        .test-ride-hero h1 { font-size: clamp(2rem,4vw,3.5rem); font-weight:900; margin-bottom:1rem; }
+        .test-ride-hero p { color:rgba(255,255,255,.75); max-width:560px; margin:0 auto; }
+        .test-ride-body { padding: 5rem 0; background: var(--bg-soft); }
+        .test-ride-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        .tr-info h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; }
+        .tr-info p { color: var(--muted); margin-bottom: 1.5rem; }
+        .tr-steps { list-style: none; }
+        .tr-steps li { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.2rem; }
+        .tr-step-num { width: 40px; height: 40px; background: linear-gradient(135deg, #00F59B, #00D084); color: #03140C; box-shadow: 0 0 15px rgba(0, 245, 155, 0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0; }
+        .tr-step-text strong { display: block; font-weight: 700; color: var(--black); margin-bottom: 2px; }
+        .tr-step-text span { font-size: 0.85rem; color: var(--muted); }
+        .tr-form-card { background: rgba(12, 18, 34, 0.9); border: 1px solid rgba(0, 245, 155, 0.25); border-radius: 24px; padding: 2.5rem; box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(0, 245, 155, 0.15); backdrop-filter: blur(16px); }
+        .tr-form-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .tr-form-card p { color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; }
+        .btn-nav-cta-black { background: var(--black); }
+        .mobile-menu-cta-link { color: var(--green-dark); font-weight: 700; }
+        .mobile-menu-eyebrow { display: inline-block; margin-bottom: 1.2rem; }
+        .showroom-info-box { margin-top: 2rem; padding: 1.5rem; background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius); }
+        .d-block { display: block; }
+        .mb-5 { margin-bottom: .5rem; }
+        .fs-85 { font-size: .85rem; }
+        .color-muted { color: var(--muted); }
+        .showroom-phone-link { display: inline-block; margin-top: .8rem; font-weight: 700; color: var(--green-dark); }
+        @media (max-width: 768px) { .test-ride-grid { grid-template-columns: 1fr; } }
+        .form-help-text { color:#64748b; font-size:12px; }
+        .email-optional-label { color:#b0bcc4; }
+    </style>
+    <link rel="stylesheet" href="assets/css/animations.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Client Configuration & Dynamic CMS Content -->
+  <script src="config.js"></script>
+  <script src="assets/js/site-content.js" defer></script>
+</head>
+<body>
+    <div class="announcement-bar"><span>🌿 Authorized Ampere by Greaves Dealer &nbsp;|&nbsp; Jai Mata Di Auto, Loni &nbsp;|&nbsp; 📞 +91-9890202091</span></div>
+<nav class="navbar" id="navbar"><div class="nav-inner"><a href="index.html" class="nav-logo"><img src="assets/images/jmd-logo.png" alt="Jai Mata Di Auto" class="nav-logo-img"></a><div class="nav-links"><a href="index.html" class="nav-link">Home</a><div class="nav-dropdown"><a href="models.html" class="nav-link">Electric Scooters <span class="dropdown-arrow">▾</span></a><div class="dropdown-menu"><a href="nexus-st.html">Nexus ST</a><a href="magnus-ex.html">Magnus EX</a><a href="magnus-grand.html">Magnus Grand</a><a href="magnus-gmax.html">Magnus GMAX</a><a href="magnus-neo.html">Magnus Neo</a><a href="reo-80.html">Reo 80</a><a href="reo-li.html">Reo Li</a></div></div><a href="test-ride.html" class="nav-link active">Book Test Ride</a><a href="dealer.html" class="nav-link">Dealer</a><a href="spare-parts.html" class="nav-link">Spare Parts</a><a href="savings.html" class="nav-link">Savings</a><a href="contact.html" class="nav-link">Contact</a></div><a href="tel:+919890202091" class="btn-nav-cta btn-nav-cta-black">&#x1F4DE; Call Now</a><button class="hamburger" id="hamburger" aria-label="Open navigation menu"><span></span><span></span><span></span></button></div></nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-inner">
+            <a href="index.html">🏠 Home</a>
+            <a href="models.html">🛵 All Models</a>
+            <a href="nexus-st.html">&nbsp;&nbsp;↳ Nexus ST</a>
+            <a href="magnus-ex.html">&nbsp;&nbsp;↳ Magnus EX</a>
+            <a href="magnus-grand.html">&nbsp;&nbsp;↳ Magnus Grand</a>
+            <a href="magnus-gmax.html">&nbsp;&nbsp;↳ Magnus GMAX</a>
+            <a href="magnus-neo.html">&nbsp;&nbsp;↳ Magnus Neo</a>
+            <a href="reo-80.html">&nbsp;&nbsp;↳ Reo 80</a>
+            <a href="reo-li.html">&nbsp;&nbsp;↳ Reo Li</a>
+            <a href="test-ride.html" class="mobile-menu-cta-link">📅 Book Test Ride</a>
+            <a href="spare-parts.html">Spare Parts</a><a href="savings.html">💡 Savings Calculator</a>
+            <a href="dealer.html">🏪 Dealer</a>
+            <a href="contact.html">📞 Contact</a>
+        </div>
+    </div>
+
+    <div class="test-ride-hero">
+        <div class="container">
+            <span class="section-eyebrow d-inline-block mb-10">Free Test Ride</span>
+            <h1>Experience Ampere. <span class="text-green">Ride Before You Buy.</span></h1>
+            <p>Book a free, no-obligation test ride at Jai Mata Di Auto, Loni. Our expert team will walk you through every model and help you find your perfect match.</p>
+        </div>
+    </div>
+
+    <div class="test-ride-body">
+        <div class="container">
+            <div class="test-ride-grid">
+                <div class="tr-info reveal-left">
+                    <h2>How It <span class="text-green">Works</span></h2>
+                    <p>Booking a test ride is simple. Fill in the form and we'll reach out to confirm your slot - usually within 24 hours.</p>
+                    <ul class="tr-steps">
+                        <li><div class="tr-step-num">1</div><div class="tr-step-text"><strong>Fill the Form</strong><span>Select the model you're interested in and submit your details.</span></div></li>
+                        <li><div class="tr-step-num">2</div><div class="tr-step-text"><strong>Get a Call Back</strong><span>Our team calls you within 24 hours to confirm your test ride slot.</span></div></li>
+                        <li><div class="tr-step-num">3</div><div class="tr-step-text"><strong>Visit Our Showroom</strong><span>Come to Jai Mata Di Auto, Loni at your confirmed time. We'll have the scooter ready for you.</span></div></li>
+                        <li><div class="tr-step-num">4</div><div class="tr-step-text"><strong>Ride & Decide</strong><span>Take the scooter for a spin, ask our experts anything, and make an informed decision!</span></div></li>
+                    </ul>
+                    <div class="showroom-info-box">
+                        <strong class="d-block mb-5">📍 Showroom Address</strong>
+                        <p class="fs-85 color-muted">Loni Babhaleshwar Road, Opp. Shivkanta Lawns, Near Dhanalaxmi Traders, Loni, Maharashtra - 413713</p>
+                        <a href="tel:+919890202091" class="showroom-phone-link">📞 +91-9890202091</a>
+                    </div>
+                </div>
+                <div class="reveal-right">
+                    <div class="tr-form-card">
+                        <h3>Book Your Free Test Ride</h3>
+                        <p>We'll confirm your slot within 24 hours!</p>
+                        <form onsubmit="handleFormSubmit(event)" novalidate>
+                            <div class="form-field">
+                                <label for="fname">Your Full Name *</label>
+                                <input type="text" id="fname" name="name" placeholder="Enter your full name" required aria-required="true">
+                            </div>
+                            <div class="form-field">
+                                <label for="fphone">Phone Number *</label>
+                                <input type="tel" id="fphone" name="phone" placeholder="10-digit number" required pattern="[0-9]{10}" inputmode="numeric" aria-required="true" aria-describedby="phone-help-tr">
+                                <small id="phone-help-tr" class="form-help-text">Enter a valid 10-digit Indian mobile number</small>
+                            </div>
+                            <div class="form-field">
+                                <label for="email">Email Address <span class="email-optional-label">(Optional)</span></label>
+                                <input type="email" id="email" name="email" placeholder="your.email@example.com">
+                            </div>
+                            <div class="form-field">
+                                <label for="fmodel">Choose Your Model *</label>
+                                <select id="fmodel" name="model" required aria-required="true">
+                                    <option value="">Select a scooter model *</option>
+                                    <option>Nexus ST - 136 km | 93 km/h</option>
+                                    <option>Magnus EX - 90 km | 53 km/h</option>
+                                    <option>Magnus Grand - 80 km | 50 km/h</option>
+                                    <option>Magnus GMAX - 142 km | 65 km/h</option>
+                                    <option>Reo 80 - 80 km | 25 km/h</option>
+                                    <option>Reo Li - 60 km | 25 km/h</option>
+                                    <option>Not sure - show me all models</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="fpincode">Pincode *</label>
+                                <input type="text" id="fpincode" name="pincode" placeholder="6-digit pincode" required pattern="[0-9]{6}" inputmode="numeric" aria-required="true">
+                            </div>
+                            <div class="form-field">
+                                <label for="time-slot">Preferred Time Slot</label>
+                                <select id="time-slot" name="time_slot">
+                                    <option value="">Choose a time slot (optional)</option>
+                                    <option>Morning (9 AM - 12 PM)</option>
+                                    <option>Afternoon (12 PM - 3 PM)</option>
+                                    <option>Evening (3 PM - 7 PM)</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="fmessage">Additional Details</label>
+                                <textarea id="fmessage" name="message" rows="3" placeholder="Preferred date or anything else we should know?"></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary btn-full-width btn-cta-mt-sm">Confirm My Test Ride</button>
+                            <p class="form-note">100% Free. No obligation. We'll call you to confirm.</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer"><div class="container"><div class="footer-clean"><p>&#x00A9; 2024 Jai Mata Di Auto &#x2014; Authorized Ampere by Greaves Dealer, Loni, Maharashtra.</p></div></div></footer>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/site-settings.js"></script>
+</body>
+</html>
+
+

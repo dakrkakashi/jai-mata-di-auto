@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JMD Admin — Spare Parts Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/css/admin.css">
+<style>
+  .sp-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .sp-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .form-select-sm, .form-input-sm {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #f8fafc;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .form-select-sm:focus, .form-input-sm:focus {
+    border-color: #38bdf8;
+    outline: none;
+  }
+</style>
+  <script src="../config.js"></script>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="../assets/images/jmd-logo.png" alt="JMD" onerror="this.style.display='none'">
+      <div class="sidebar-brand-text"><strong>JMD Admin</strong><div class="sidebar-live-badge">Live</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="/admin/dashboard.html" class="nav-item"><span class="icon">📊</span> Dashboard</a>
+      <a href="/admin/editor.html" class="nav-item"><span class="icon">✏️</span> Page Editor</a>
+      <a href="/admin/pages.html" class="nav-item"><span class="icon">📄</span> Pages</a>
+      <div class="nav-section-label">Content</div>
+      <a href="/admin/leads.html" class="nav-item"><span class="icon">👥</span> Leads &amp; CRM</a>
+      <a href="/admin/media.html" class="nav-item"><span class="icon">🖼️</span> Media</a>
+      <a href="/admin/spare-parts.html" class="nav-item active"><span class="icon">🔧</span> Spare Parts</a>
+      <div class="nav-section-label">Tools</div>
+      <a href="/admin/settings.html" class="nav-item"><span class="icon">⚙️</span> Settings</a>
+      <a href="/admin/analytics.html" class="nav-item"><span class="icon">📈</span> Analytics</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info"><div class="admin-avatar">A</div><div><div class="admin-name">Administrator</div><div class="admin-role">Super Admin</div></div></div>
+      <button class="btn-logout" onclick="logout()">⏻ Logout</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <div class="topbar">
+      <span class="topbar-title">🔧 Spare Parts Catalog</span>
+      <div class="topbar-actions">
+        <button class="topbar-btn" onclick="openAddPartModal()">➕ Add New Part</button>
+        <button class="topbar-btn" onclick="exportSparePartsCSV()">📥 Export CSV</button>
+        <button class="topbar-btn" onclick="loadSpareParts()">🔄 Refresh</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- Quick Stats -->
+      <div class="sp-stats-grid">
+        <div class="card" style="padding:16px;">
+          <div style="font-size:12px;color:#94a3b8;margin-bottom:4px;">TOTAL PARTS</div>
+          <div id="stat-total-parts" style="font-size:24px;font-weight:700;color:#f8fafc;">—</div>
+        </div>
+        <div class="card" style="padding:16px;">
+          <div style="font-size:12px;color:#94a3b8;margin-bottom:4px;">IN STOCK</div>
+          <div id="stat-in-stock" style="font-size:24px;font-weight:700;color:#10b981;">—</div>
+        </div>
+        <div class="card" style="padding:16px;">
+          <div style="font-size:12px;color:#94a3b8;margin-bottom:4px;">OUT OF STOCK</div>
+          <div id="stat-out-stock" style="font-size:24px;font-weight:700;color:#ef4444;">—</div>
+        </div>
+      </div>
+
+      <!-- Price List Metadata Banner -->
+      <div class="card mb-16" id="pl-meta-card" style="padding:12px 16px;background:rgba(15,23,42,0.6);border:1px solid #334155;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:20px;">📁</span>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#f8fafc;" id="pl-meta-info">Price list: ALL_VEHICLES_PRICE_LIST_Retail_Main.xlsx</div>
+            <div style="font-size:11px;color:#94a3b8;" id="pl-meta-date">Imported on —</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;" id="pl-meta-badges">
+          <span class="badge badge-info" id="pl-badge-records">2,964 Records</span>
+          <span class="badge badge-warning" id="pl-badge-flagged" style="cursor:pointer;" onclick="filterByFlag('flagged')">⚠️ Flagged Items</span>
+          <span class="badge badge-danger" id="pl-badge-hold" style="cursor:pointer;" onclick="filterByFlag('hold')">🛑 3 On Hold</span>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="sp-filter-bar">
+        <div class="search-box" style="flex:1;min-width:240px;">
+          <span class="icon">🔍</span>
+          <input type="text" id="sp-search" placeholder="Search by part name or code…" oninput="filterSpareParts()">
+        </div>
+        <select id="sp-category-filter" class="form-select-sm" style="padding:8px 12px;" onchange="filterSpareParts()" title="Filter by category" aria-label="Filter by category">
+          <option value="">All Categories</option>
+        </select>
+        <select id="sp-model-filter" class="form-select-sm" style="padding:8px 12px;" onchange="filterSpareParts()" title="Filter by model" aria-label="Filter by model">
+          <option value="">All Models</option>
+        </select>
+        <select id="sp-stock-filter" class="form-select-sm" style="padding:8px 12px;" onchange="filterSpareParts()" title="Filter by stock status" aria-label="Filter by stock status">
+          <option value="all">All Stock Status</option>
+          <option value="in_stock">In Stock (&gt;0)</option>
+          <option value="low_stock">Low Stock (1–5)</option>
+          <option value="out_of_stock">Out of Stock (0)</option>
+          <option value="enquire">Enquire (Unset/Null)</option>
+        </select>
+        <select id="sp-flag-filter" class="form-select-sm" style="padding:8px 12px;" onchange="filterSpareParts()" title="Filter by verification status" aria-label="Filter by verification status">
+          <option value="all">All Verification Status</option>
+          <option value="flagged">⚠️ All Flagged Items</option>
+          <option value="hold">🛑 On Hold List (Blocked from Cart)</option>
+          <option value="conflict">⚡ Price Conflicts</option>
+          <option value="price_on_request">💬 Price on Request</option>
+        </select>
+        <select class="form-select-sm" style="padding:8px 12px;" onchange="changePageSize(this.value)" title="Items per page" aria-label="Items per page">
+          <option value="25">25 per page</option>
+          <option value="50" selected>50 per page</option>
+          <option value="100">100 per page</option>
+        </select>
+      </div>
+
+      <!-- Catalog Table -->
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:70px;">ID</th>
+                <th>Part Name</th>
+                <th>Code</th>
+                <th>Category</th>
+                <th>Model</th>
+                <th style="width:120px;">Price (₹)</th>
+                <th style="width:130px;">Stock</th>
+                <th style="width:110px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="spareparts-tbody">
+              <tr><td colspan="8" class="text-center p-10 color-muted">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bulk-row">
+          <div id="parts-count" class="text-muted text-sm">— parts</div>
+          <div id="parts-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Part Modal -->
+<div class="modal-overlay" id="add-part-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>➕ Add New Spare Part</h2>
+      <button class="modal-close" onclick="closeModal('add-part-modal')">✕</button>
+    </div>
+    <form id="add-part-form" onsubmit="submitAddPart(event)" style="padding:20px;">
+      <div class="form-group mb-16">
+        <label for="add-sp-name" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Part Name *</label>
+        <input type="text" id="add-sp-name" class="form-input" placeholder="e.g. Brake Lever Left" required>
+      </div>
+      <div class="form-group mb-16">
+        <label for="add-sp-code" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Part Code *</label>
+        <input type="text" id="add-sp-code" class="form-input" placeholder="e.g. JMD-BL-01" required>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div class="form-group">
+          <label for="add-sp-category" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Category</label>
+          <input type="text" id="add-sp-category" class="form-input" placeholder="General, Electrical, Brake…" value="General">
+        </div>
+        <div class="form-group">
+          <label for="add-sp-model" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Model</label>
+          <input type="text" id="add-sp-model" class="form-input" placeholder="Nexus, Magnus, Reo…" value="Nexus">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+        <div class="form-group">
+          <label for="add-sp-price" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Price (₹)</label>
+          <input type="number" id="add-sp-price" class="form-input" min="0" step="0.01" value="0">
+        </div>
+        <div class="form-group">
+          <label for="add-sp-stock" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Initial Stock</label>
+          <input type="number" id="add-sp-stock" class="form-input" min="0" step="1" value="0">
+        </div>
+      </div>
+      <div class="modal-footer" style="padding:0;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('add-part-modal')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Part</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Part Modal -->
+<div class="modal-overlay" id="edit-part-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>✏️ Edit Spare Part</h2>
+      <button class="modal-close" onclick="closeModal('edit-part-modal')">✕</button>
+    </div>
+    <form id="edit-part-form" onsubmit="submitSavePart(event)" style="padding:20px;">
+      <input type="hidden" id="edit-sp-id">
+      <div class="form-group mb-16">
+        <label for="edit-sp-name" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Part Name *</label>
+        <input type="text" id="edit-sp-name" class="form-input" required>
+      </div>
+      <div class="form-group mb-16">
+        <label for="edit-sp-code" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Part Code *</label>
+        <input type="text" id="edit-sp-code" class="form-input" required>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div class="form-group">
+          <label for="edit-sp-category" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Category</label>
+          <input type="text" id="edit-sp-category" class="form-input">
+        </div>
+        <div class="form-group">
+          <label for="edit-sp-model" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Model</label>
+          <input type="text" id="edit-sp-model" class="form-input">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+        <div class="form-group">
+          <label for="edit-sp-price" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Price (₹)</label>
+          <input type="number" id="edit-sp-price" class="form-input" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label for="edit-sp-stock" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Stock Quantity</label>
+          <input type="number" id="edit-sp-stock" class="form-input" min="0" step="1">
+        </div>
+      </div>
+      <div class="modal-footer" style="padding:0;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('edit-part-modal')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/admin/js/api.js"></script>
+<script src="/admin/js/toast.js"></script>
+<script src="/admin/js/auth.js"></script>
+<script src="/admin/js/spare-parts.js"></script>
+<script>
+function closeModal(id) {
+  document.getElementById(id)?.classList.remove('open');
+}
+async function init() {
+  const ok = await checkAuth();
+  if (!ok) return;
+  await loadSpareParts();
+}
+init();
+</script>
+</body>
+</html>

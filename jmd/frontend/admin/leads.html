@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JMD Admin — Leads CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/css/admin.css">
+  <script src="../config.js"></script>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="../assets/images/jmd-logo.png" alt="JMD" onerror="this.style.display='none'">
+      <div class="sidebar-brand-text"><strong>JMD Admin</strong><div class="sidebar-live-badge">Live</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="/admin/dashboard.html" class="nav-item"><span class="icon">📊</span> Dashboard</a>
+      <a href="/admin/editor.html" class="nav-item"><span class="icon">✏️</span> Page Editor</a>
+      <a href="/admin/pages.html" class="nav-item"><span class="icon">📄</span> Pages</a>
+      <div class="nav-section-label">Content</div>
+      <a href="/admin/leads.html" class="nav-item active"><span class="icon">👥</span> Leads &amp; CRM</a>
+      <a href="/admin/media.html" class="nav-item"><span class="icon">🖼️</span> Media</a>
+      <a href="/admin/spare-parts.html" class="nav-item"><span class="icon">🔧</span> Spare Parts</a>
+      <div class="nav-section-label">Tools</div>
+      <a href="/admin/settings.html" class="nav-item"><span class="icon">⚙️</span> Settings</a>
+      <a href="/admin/analytics.html" class="nav-item"><span class="icon">📈</span> Analytics</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info"><div class="admin-avatar">A</div><div><div class="admin-name">Administrator</div><div class="admin-role">Super Admin</div></div></div>
+      <button class="btn-logout" onclick="logout()">⏻ Logout</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <div class="topbar">
+      <span class="topbar-title">👥 Leads &amp; CRM</span>
+      <div class="topbar-actions">
+        <button class="topbar-btn" onclick="exportLeadsCSV()">📥 Export CSV</button>
+        <button class="topbar-btn" onclick="loadLeads()">🔄 Refresh</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- Filters -->
+      <div class="flex-row mb-16">
+        <div class="search-box">
+          <span class="icon">🔍</span>
+          <input type="text" id="leads-search" placeholder="Search name, phone, model…" oninput="filterLeads()">
+        </div>
+        <button class="filter-chip active" onclick="setLeadFilter(this,'all')">All</button>
+        <button class="filter-chip" onclick="setLeadFilter(this,'new')">New</button>
+        <button class="filter-chip" onclick="setLeadFilter(this,'contacted')">Contacted</button>
+        <button class="filter-chip" onclick="setLeadFilter(this,'quoted')">Quoted</button>
+        <button class="filter-chip" onclick="setLeadFilter(this,'converted')">Converted</button>
+        <button class="filter-chip" onclick="setLeadFilter(this,'lost')">Lost</button>
+      </div>
+
+      <!-- Table -->
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="select-all-leads" title="Select all" aria-label="Select all leads" onchange="toggleSelectAll(this)"></th>
+                <th>Name</th><th>Phone</th><th>Model / Subject</th>
+                <th>Source</th><th>Status</th><th>Date</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="leads-tbody">
+              <tr><td colspan="8" class="text-center p-10 color-muted">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bulk-row">
+          <div id="bulk-actions" class="hidden bulk-actions-group">
+            <button class="btn btn-sm btn-danger" onclick="bulkLeadAction('delete')">🗑 Delete</button>
+            <button class="btn btn-sm btn-secondary" onclick="bulkLeadAction('archive')">📦 Archive</button>
+            <button class="btn btn-sm btn-secondary" onclick="bulkLeadAction('markRead')">✅ Mark Read</button>
+          </div>
+          <div id="leads-count" class="text-muted text-sm">— leads</div>
+          <div id="leads-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lead Detail Modal -->
+<div class="modal-overlay" id="lead-modal">
+  <div class="modal lg">
+    <div class="modal-header">
+      <h2>📋 Lead Details</h2>
+      <button class="modal-close" onclick="closeModal('lead-modal')">✕</button>
+    </div>
+    <div id="lead-detail-body"></div>
+    <div class="modal-footer">
+      <select id="lead-status-select" class="lead-status-select" onchange="updateLeadStatus()" title="Update status" aria-label="Update lead status">
+        <option value="new">🆕 New</option><option value="contacted">📞 Contacted</option>
+        <option value="quoted">💬 Quoted</option><option value="converted">✅ Converted</option>
+        <option value="lost">❌ Lost</option>
+      </select>
+      <button class="btn btn-secondary" onclick="closeModal('lead-modal')">Close</button>
+      <button class="btn btn-success" onclick="whatsAppReplyLead()">💬 WhatsApp</button>
+      <button class="btn btn-danger" onclick="deleteCurrentLead()">🗑 Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="/admin/js/api.js"></script>
+<script src="/admin/js/toast.js"></script>
+<script src="/admin/js/auth.js"></script>
+<script src="/admin/js/leads.js"></script>
+<script>
+function closeModal(id){ document.getElementById(id)?.classList.remove('open'); }
+async function init(){ const ok = await checkAuth(); if(!ok) return; await loadLeads(); }
+init();
+</script>
+</body>
+</html>

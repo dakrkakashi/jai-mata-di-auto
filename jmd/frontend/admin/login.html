@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JMD Admin — Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+  body{background:#0a0a0f;color:#f0f0ff;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  #particle-canvas{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .login-wrap{position:relative;z-index:10;width:100%;max-width:400px;padding:20px}
+  .login-card{
+    background:rgba(26,26,46,0.92);
+    border:1px solid rgba(99,102,241,0.3);
+    border-radius:20px;
+    padding:40px 36px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(99,102,241,0.15);
+    -webkit-backdrop-filter:blur(20px);
+    backdrop-filter:blur(20px);
+    animation:fadeSlideUp 0.5s ease;
+  }
+  .login-logo{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+  .login-logo img{width:52px;height:52px;border-radius:12px;object-fit:contain;background:#fff;padding:4px}
+  .login-logo-name{font-size:18px;font-weight:800;background:linear-gradient(135deg,#6366f1,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .login-logo-sub{font-size:12px;color:#a0a0c0;margin-top:2px}
+  .login-title{font-size:26px;font-weight:800;margin-bottom:6px}
+  .login-sub{font-size:14px;color:#a0a0c0;margin-bottom:28px}
+  .login-field{margin-bottom:16px}
+  .login-field label{display:block;font-size:12px;font-weight:600;color:#a0a0c0;margin-bottom:7px}
+  .login-field input{
+    width:100%;background:rgba(10,10,24,0.8);border:1px solid #252540;
+    color:#f0f0ff;padding:12px 16px;border-radius:10px;font-size:15px;outline:none;
+    font-family:inherit;transition:all 0.2s;
+  }
+  .login-field input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.15)}
+  .login-remember{display:flex;align-items:center;gap:8px;font-size:13px;color:#a0a0c0;margin-bottom:24px;cursor:pointer;-webkit-user-select:none;user-select:none}
+  .login-remember input{accent-color:#6366f1;cursor:pointer}
+  .btn-login{
+    width:100%;padding:14px;border:none;cursor:pointer;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    color:white;border-radius:10px;font-size:16px;font-weight:700;
+    font-family:inherit;transition:all 0.2s;letter-spacing:0.3px;
+  }
+  .btn-login:hover{opacity:0.88;box-shadow:0 8px 25px rgba(99,102,241,0.5);transform:translateY(-1px)}
+  .btn-login:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+  .login-error{color:#ef4444;font-size:13px;margin-bottom:12px;display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:10px 12px}
+  .login-lockout{color:#f59e0b;font-size:13px;margin-bottom:12px;display:none;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:10px 12px}
+  .login-footer{text-align:center;margin-top:20px;font-size:11px;color:#606080}
+  @keyframes fadeSlideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+</style>
+  <script src="../config.js"></script>
+</head>
+<body>
+<canvas id="particle-canvas"></canvas>
+
+<div class="login-wrap">
+  <div class="login-card" id="login-card">
+    <div class="login-logo">
+      <img src="../assets/images/jmd-logo.png" alt="JMD" onerror="this.style.display='none'">
+      <div>
+        <div class="login-logo-name">Jai Mata Di Auto</div>
+        <div class="login-logo-sub">Admin Control Panel</div>
+      </div>
+    </div>
+    <h1 class="login-title">Welcome Back 👋</h1>
+    <p class="login-sub">Sign in to manage your website</p>
+    <div class="login-lockout" id="login-lockout">🔒 Too many failed attempts. Wait 30 minutes.</div>
+    <div class="login-error" id="login-error"></div>
+    <div class="login-field">
+      <label for="login-password">Admin Password</label>
+      <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+    </div>
+    <label class="login-remember">
+      <input type="checkbox" id="remember-me"> Remember me for 30 days
+    </label>
+    <button class="btn-login" id="btn-login" onclick="attemptLogin()">Sign In →</button>
+    <div class="login-footer">Jai Mata Di Auto © 2025 | Secured with JWT</div>
+  </div>
+</div>
+
+<script src="/admin/js/auth.js"></script>
+<script>
+// Particle background
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+  const particles = Array.from({ length: 60 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2 + 0.5,
+    dx: (Math.random() - 0.5) * 0.6,
+    dy: (Math.random() - 0.5) * 0.6,
+    a: Math.random() * 0.5 + 0.1
+  }));
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(99,102,241,${p.a})`;
+      ctx.fill();
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    // Draw connecting lines
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(99,102,241,${0.15 * (1 - dist/120)})`;
+          ctx.lineWidth = 0.8;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  // Check if already logged in
+  window.api('/api/admin/check-auth')
+    .then(r => { if (r && r.authenticated) window.location.href = '/admin/dashboard.html'; })
+    .catch(() => {});
+})();
+</script>
+</body>
+</html>

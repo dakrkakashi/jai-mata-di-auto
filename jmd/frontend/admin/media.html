@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JMD Admin — Media Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/css/admin.css">
+  <script src="../config.js"></script>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="../assets/images/jmd-logo.png" alt="JMD" onerror="this.style.display='none'">
+      <div class="sidebar-brand-text"><strong>JMD Admin</strong><div class="sidebar-live-badge">Live</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="/admin/dashboard.html" class="nav-item"><span class="icon">📊</span> Dashboard</a>
+      <a href="/admin/editor.html" class="nav-item"><span class="icon">✏️</span> Page Editor</a>
+      <a href="/admin/pages.html" class="nav-item"><span class="icon">📄</span> Pages</a>
+      <div class="nav-section-label">Content</div>
+      <a href="/admin/leads.html" class="nav-item"><span class="icon">👥</span> Leads &amp; CRM</a>
+      <a href="/admin/media.html" class="nav-item active"><span class="icon">🖼️</span> Media</a>
+      <a href="/admin/spare-parts.html" class="nav-item"><span class="icon">🔧</span> Spare Parts</a>
+      <div class="nav-section-label">Tools</div>
+      <a href="/admin/settings.html" class="nav-item"><span class="icon">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info"><div class="admin-avatar">A</div><div><div class="admin-name">Administrator</div><div class="admin-role">Super Admin</div></div></div>
+      <button class="btn-logout" onclick="logout()">⏻ Logout</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <div class="topbar">
+      <span class="topbar-title">🖼️ Media Manager</span>
+      <div class="topbar-actions">
+        <button class="topbar-btn" onclick="promptNewFolder()">📁 New Folder</button>
+        <button class="topbar-btn" onclick="loadMedia()">🔄 Refresh</button>
+        <span id="media-bulk-actions" class="hidden bulk-actions-group">
+          <button class="topbar-btn color-danger" onclick="deleteSelectedMedia()">🗑 Delete Selected</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- Breadcrumb -->
+      <div class="breadcrumb" id="media-breadcrumb">
+        <span class="breadcrumb-item active" onclick="loadMedia('')">📁 uploads</span>
+      </div>
+
+      <!-- Drop Zone -->
+      <div class="drop-zone" id="media-dropzone">
+        <div class="drop-zone-icon">☁️</div>
+        <h3>Drop files here or click to upload</h3>
+        <p>Supports: images, PDFs, SVG (max 50MB each)</p>
+        <input type="file" accept="image/*,application/pdf,.svg" multiple title="Upload files" aria-label="Upload media files" onchange="handleFileUpload(this.files)">
+      </div>
+
+      <!-- Storage Stats -->
+      <div class="storage-row">
+        <span class="text-muted text-sm">Storage:</span>
+        <div class="progress-bar flex-1"><div class="progress-fill" id="storage-bar-fill"></div></div>
+        <span class="text-sm" id="storage-text">—</span>
+      </div>
+
+      <!-- Grid -->
+      <div class="media-grid" id="media-grid">
+        <div class="empty-state"><div class="icon">🖼️</div><p>Loading…</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/admin/js/api.js"></script>
+<script src="/admin/js/toast.js"></script>
+<script src="/admin/js/auth.js"></script>
+<script src="/admin/js/media.js"></script>
+<script>
+async function init(){ const ok = await checkAuth(); if(!ok) return; await loadMedia(''); }
+init();
+</script>
+</body>
+</html>

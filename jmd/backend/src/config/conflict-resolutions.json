@@ -1,0 +1,24 @@
+{
+  "VSP-MAG-154__magnus-60-2020": {
+    "partCode": "VSP-MAG-154",
+    "modelSlug": "magnus-60-2020",
+    "modelLabel": "MAGNUS 60 (2020)",
+    "preferredPriceInr": 46.25,
+    "preferredPricePaise": 4625,
+    "rejectedPriceInr": 1911.25,
+    "rejectedPricePaise": 191125,
+    "note": "Resolved: duplicate row of ₹1,911.25 rejected; part is ₹58.75 on MAGNUS 60 (2022)",
+    "conflict": false
+  },
+  "VSP-MAG-091__magnus-60-2020": {
+    "partCode": "VSP-MAG-091",
+    "modelSlug": "magnus-60-2020",
+    "modelLabel": "MAGNUS 60 (2020)",
+    "preferredPriceInr": 460.0,
+    "preferredPricePaise": 46000,
+    "rejectedPriceInr": 415.0,
+    "rejectedPricePaise": 41500,
+    "note": "Duplicate row at ₹415 rejected (appears to be mislabeled rear cover row)",
+    "conflict": false
+  }
+}

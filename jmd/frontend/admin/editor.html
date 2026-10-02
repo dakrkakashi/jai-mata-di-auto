@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JMD Admin — Page Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/css/admin.css">
+<link rel="stylesheet" href="/admin/css/editor.css">
+  <script src="../config.js"></script>
+</head>
+<body>
+<div class="editor-page">
+
+  <!-- EDITOR TOOLBAR -->
+  <div class="editor-toolbar">
+    <a href="/admin/dashboard.html" class="editor-btn" title="Back to Dashboard">← Back</a>
+    <div class="editor-sep"></div>
+
+    <div class="editor-toolbar-group">
+      <select class="page-select" id="page-selector" title="Select page" aria-label="Select page to edit" onchange="Editor.loadPageForEditing(this.value)">
+        <option>Loading…</option>
+      </select>
+    </div>
+
+    <div class="editor-sep"></div>
+
+    <div class="editor-toolbar-group">
+      <button class="editor-btn" id="btn-undo" onclick="Editor.undoAction()" title="Undo (Ctrl+Z)">↩ Undo</button>
+      <button class="editor-btn" id="btn-redo" onclick="Editor.redoAction()" title="Redo (Ctrl+Y)">↪ Redo</button>
+    </div>
+
+    <div class="editor-sep"></div>
+
+    <div class="editor-toolbar-group">
+      <button class="editor-btn active" data-device="desktop" onclick="Editor.setDevice('desktop')" title="Desktop view">🖥</button>
+      <button class="editor-btn" data-device="tablet" onclick="Editor.setDevice('tablet')" title="Tablet view">📱</button>
+      <button class="editor-btn" data-device="mobile" onclick="Editor.setDevice('mobile')" title="Mobile view">📲</button>
+    </div>
+
+    <div class="editor-sep"></div>
+
+    <div class="editor-toolbar-group">
+      <button class="editor-btn" onclick="Editor.togglePreview()" title="Toggle preview">👁 Preview</button>
+      <button class="editor-btn" onclick="window.open('/', '_blank')" title="Open live site">🔗 Live</button>
+    </div>
+
+    <div class="autosave-indicator">
+      <div class="autosave-dot" id="autosave-dot"></div>
+      <span id="autosave-text" class="autosave-text">All saved</span>
+    </div>
+
+    <!-- Retired unsafe page save/version restore UI buttons -->
+    <div class="editor-toolbar-group editor-topbar-group" style="display:none;">
+      <button class="editor-btn" onclick="loadVersionsPanel()" title="Version history">🕐 History</button>
+      <button class="editor-btn primary" id="btn-publish" onclick="Editor.publishChanges()">🚀 Publish</button>
+    </div>
+  </div>
+
+  <!-- EDITOR BODY -->
+  <div class="editor-body">
+
+    <!-- LEFT PANEL -->
+    <div class="editor-left">
+      <div class="editor-tabs">
+        <div class="editor-tab active" onclick="switchEditorTab('blocks', this)">Blocks</div>
+        <div class="editor-tab" onclick="switchEditorTab('sections', this)">Sections</div>
+        <div class="editor-tab" onclick="switchEditorTab('layers', this)">Layers</div>
+      </div>
+
+      <!-- BLOCKS TAB -->
+      <div class="editor-tab-panel active" id="etab-blocks">
+        <div class="block-section-title">Basic</div>
+        <div class="block-grid">
+          <div class="block-item" onclick="Editor.insertElement('text')" title="Text block"><span class="bi">📝</span>Text</div>
+          <div class="block-item" onclick="Editor.insertElement('heading')" title="Heading"><span class="bi">📌</span>Heading</div>
+          <div class="block-item" onclick="Editor.insertElement('subheading')" title="Subheading"><span class="bi">🔤</span>Sub-H</div>
+          <div class="block-item" onclick="Editor.insertElement('button')" title="Button"><span class="bi">🔘</span>Button</div>
+          <div class="block-item" onclick="Editor.insertElement('image')" title="Image"><span class="bi">🖼</span>Image</div>
+          <div class="block-item" onclick="Editor.insertElement('divider')" title="Divider"><span class="bi">➖</span>Divider</div>
+          <div class="block-item" onclick="Editor.insertElement('spacer')" title="Spacer"><span class="bi">↕️</span>Spacer</div>
+        </div>
+        <div class="block-section-title">Media</div>
+        <div class="block-grid">
+          <div class="block-item" onclick="Editor.insertElement('youtube')" title="YouTube video"><span class="bi">▶️</span>YouTube</div>
+          <div class="block-item" onclick="Editor.insertElement('gallery')" title="Image gallery"><span class="bi">🖼</span>Gallery</div>
+          <div class="block-item" onclick="Editor.insertElement('carousel')" title="Carousel"><span class="bi">🎠</span>Carousel</div>
+          <div class="block-item" onclick="Editor.insertElement('map')" title="Google Map"><span class="bi">🗺</span>Map</div>
+        </div>
+        <div class="block-section-title">Interactive</div>
+        <div class="block-grid">
+          <div class="block-item" onclick="Editor.insertElement('form')" title="Contact form"><span class="bi">📋</span>Form</div>
+          <div class="block-item" onclick="Editor.insertElement('accordion')" title="FAQ accordion"><span class="bi">❓</span>FAQ</div>
+          <div class="block-item" onclick="Editor.insertElement('countdown')" title="Countdown"><span class="bi">⏱</span>Timer</div>
+          <div class="block-item" onclick="Editor.insertElement('whatsapp')" title="WhatsApp button"><span class="bi">💬</span>WhatsApp</div>
+        </div>
+        <div class="block-section-title">Custom Code</div>
+        <div class="block-grid">
+          <div class="block-item" onclick="openHtmlModal()" title="Custom HTML"><span class="bi">💻</span>HTML</div>
+          <div class="block-item" onclick="Editor.insertElement('iframe')" title="iFrame"><span class="bi">🔲</span>iFrame</div>
+        </div>
+      </div>
+
+      <!-- SECTIONS TAB -->
+      <div class="editor-tab-panel" id="etab-sections">
+        <div class="block-section-title">Hero Sections</div>
+        <div class="template-item" onclick="Editor.insertTemplate('hero-gradient')"><span class="tname">🌟 Gradient Hero</span><span class="tsub">Fullwidth with CTA</span></div>
+        <div class="template-item" onclick="Editor.insertTemplate('hero-split')"><span class="tname">🖼 Split Hero</span><span class="tsub">Image + text layout</span></div>
+        <div class="template-item" onclick="Editor.insertTemplate('hero-minimal')"><span class="tname">✨ Minimal Hero</span><span class="tsub">Clean text style</span></div>
+
+        <div class="block-section-title">Features &amp; Social Proof</div>
+        <div class="template-item" onclick="Editor.insertTemplate('features-3col')"><span class="tname">🔷 3 Column Cards</span><span class="tsub">Icon + title + text</span></div>
+        <div class="template-item" onclick="Editor.insertTemplate('testimonials')"><span class="tname">⭐ Testimonials</span><span class="tsub">3-column reviews</span></div>
+        <div class="template-item" onclick="Editor.insertTemplate('stats-counter')"><span class="tname">📈 Stats Counter</span><span class="tsub">Animated numbers</span></div>
+
+        <div class="block-section-title">CTA &amp; Contact</div>
+        <div class="template-item" onclick="Editor.insertTemplate('cta-banner')"><span class="tname">📣 CTA Banner</span><span class="tsub">Full-width call to action</span></div>
+        <div class="template-item" onclick="Editor.insertTemplate('contact-split')"><span class="tname">📬 Contact Split</span><span class="tsub">Form + info side by side</span></div>
+
+        <div class="block-section-title">Footer</div>
+        <div class="template-item" onclick="Editor.insertTemplate('footer-minimal')"><span class="tname">🔻 Minimal Footer</span><span class="tsub">Copyright + links</span></div>
+        <div class="template-item" onclick="Editor.insertTemplate('footer-4col')"><span class="tname">🏗 4-Column Footer</span><span class="tsub">Full site footer</span></div>
+      </div>
+
+      <!-- LAYERS TAB -->
+      <div class="editor-tab-panel" id="etab-layers">
+        <div id="editor-layers" class="p-10">
+          <div class="color-muted font-size-11">Load a page to see element layers</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CANVAS AREA -->
+    <div class="editor-canvas-area">
+      <div class="device-frame desktop" id="device-frame">
+        <div class="editor-iframe-wrap">
+          <iframe id="editor-iframe" title="Page Editor Canvas" src="about:blank"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="editor-right">
+      <div class="editor-tabs">
+        <div class="editor-tab active" onclick="switchRightTab('props', this)">Properties</div>
+        <div class="editor-tab" onclick="switchRightTab('versions', this)">History</div>
+      </div>
+      <div class="editor-tab-panel active" id="rtab-props" class="rtab-panel">
+        <div id="props-right-panel">
+          <div class="props-empty">
+            <div class="icon">🎯</div>
+            <p>Click any element in the canvas to edit its properties here</p>
+          </div>
+        </div>
+      </div>
+      <div class="editor-tab-panel" id="rtab-versions" class="rtab-panel">
+        <div id="versions-list" class="versions-list">
+          <div class="props-empty"><p>Click "Load History" to see versions</p></div>
+        </div>
+        <div class="versions-footer">
+          <button class="btn btn-secondary w-full btn-sm" onclick="Editor.loadVersions()">🔄 Load History</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Custom HTML Modal -->
+<div class="modal-overlay" id="html-modal">
+  <div class="modal lg">
+    <div class="modal-header">
+      <h2>💻 Insert Custom HTML</h2>
+      <button class="modal-close" onclick="closeModal('html-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Paste your HTML below</label>
+        <textarea id="custom-html-input" class="form-control mono" rows="14" placeholder="<section>&#10;  <h2>Your Content</h2>&#10;</section>"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('html-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="Editor.insertCustomHTML()">Insert Block</button>
+    </div>
+  </div>
+</div>
+
+<script src="/admin/js/api.js"></script>
+<script src="/admin/js/toast.js"></script>
+<script src="/admin/js/auth.js"></script>
+<script src="/admin/js/history.js"></script>
+<script src="/admin/js/editor.js"></script>
+<script>
+function switchEditorTab(tab, el) {
+  document.querySelectorAll('#etab-blocks,#etab-sections,#etab-layers').forEach(p => p.classList.remove('active'));
+  document.querySelector('.editor-left .editor-tabs')?.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('etab-' + tab)?.classList.add('active');
+  el?.classList.add('active');
+  if (tab === 'layers') Editor.renderLayers();
+}
+
+function switchRightTab(tab, el) {
+  document.querySelectorAll('#rtab-props,#rtab-versions').forEach(p => p.classList.remove('active'));
+  document.querySelector('.editor-right .editor-tabs')?.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('rtab-' + tab)?.classList.add('active');
+  el?.classList.add('active');
+}
+
+function openHtmlModal() {
+  const input = document.getElementById('custom-html-input');
+  if (input) input.value = '';
+  document.getElementById('html-modal')?.classList.add('open');
+}
+
+function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
+
+function loadVersionsPanel() {
+  switchRightTab('versions', document.querySelector('.editor-right .editor-tab:last-child'));
+  Editor.loadVersions();
+}
+
+// Auth check
+checkAuth();
+</script>
+</body>
+</html>

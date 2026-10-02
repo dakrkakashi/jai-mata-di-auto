@@ -1,0 +1,457 @@
+/* =============================================
+   inline-styles.css — Utility classes to replace
+   all inline style="" attributes across HTML files.
+   This eliminates IDE "CSS inline styles" warnings.
+   ============================================= */
+
+/* ── Display & Layout ── */
+.d-none { display: none; }
+.d-block { display: block; }
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+.d-inline-block { display: inline-block; }
+.d-inline-flex { display: inline-flex; }
+
+/* ── Flex utilities ── */
+.flex-wrap { flex-wrap: wrap; }
+.flex-col { flex-direction: column; }
+.align-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-5 { gap: .5rem; }
+.gap-10 { gap: 1rem; }
+.gap-15 { gap: 1.5rem; }
+.gap-20 { gap: 2rem; }
+
+/* ── Text alignment ── */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+
+/* ── Font weight ── */
+.fw-700 { font-weight: 700; }
+.fw-900 { font-weight: 900; }
+
+/* ── Font sizes ── */
+.fs-75 { font-size: .75rem; }
+.fs-80 { font-size: .8rem; }
+.fs-85 { font-size: .85rem; }
+.fs-90 { font-size: .9rem; }
+.fs-95 { font-size: .95rem; }
+.fs-110 { font-size: 1.1rem; }
+.fs-160 { font-size: 1.6rem; }
+.fs-30rem { font-size: 3rem; }
+.fs-emoji { font-size: 2.5rem; }
+
+/* ── Color utilities ── */
+.color-muted { color: var(--muted); }
+.color-mid { color: var(--mid); }
+.color-green { color: #22c55e; }
+.color-red { color: #ef4444; }
+.color-white-60 { color: rgba(255,255,255,.6); }
+.color-white-85 { color: rgba(255,255,255,.85); }
+.color-amber { color: #f59e0b; }
+.color-yellow { color: #f1c40f; }
+.italic { font-style: italic; }
+
+/* ── Background utilities ── */
+.bg-dark-card { background: #161b22; }
+.bg-transparent { background: transparent; }
+
+/* ── Margin utilities ── */
+.mb-0 { margin-bottom: 0; }
+.mb-5 { margin-bottom: .5rem; }
+.mb-10 { margin-bottom: 1rem; }
+.mb-15 { margin-bottom: 1.5rem; }
+.mb-20 { margin-bottom: 2rem; }
+.mb-05 { margin-bottom: .05rem; }
+.mt-5 { margin-top: .5rem; }
+.mt-8 { margin-top: .8rem; }
+.mt-10 { margin-top: 1rem; }
+.mt-15 { margin-top: 1.5rem; }
+.mt-20 { margin-top: 2rem; }
+.mt-24 { margin-top: 24px; }
+.mt-50 { margin-top: 5rem; }
+
+/* ── Padding utilities ── */
+.p-5 { padding: .5rem; }
+.p-10 { padding: 1rem; }
+.p-15 { padding: 1.5rem; }
+.p-0 { padding: 0; }
+.px-15 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-20 { padding-top: 2rem; padding-bottom: 2rem; }
+
+/* ── Border utilities ── */
+.border-0 { border: 0; }
+.border-none { border: none; }
+.border-top-none { border-top: none; }
+
+/* ── Overflow ── */
+.overflow-hidden { overflow: hidden; }
+
+/* ── Width ── */
+.w-100 { width: 100%; }
+
+/* ── Section padding variants ── */
+.section-pad-3 { padding: 3rem 0; }
+.section-pad-4 { padding: 4rem 0; }
+.section-pad-5 { padding: 5rem 0; }
+.section-pad-25 { padding: 2.5rem 0; }
+
+/* ── Specific section backgrounds ── */
+.bg-dark-green { background: #0a0f0a; }
+.bg-darker-green { background: #07100a; }
+.bg-deep-green { background: #0f1a0f; }
+.bg-dark-card-2 { background: #161b22; }
+.bg-alt { background: var(--bg-alt); }
+.bg-soft { background: var(--bg-soft); }
+.bg-dark-blue { background: #0a1628; }
+.section-cta { padding: 4rem 0; text-align: center; background: #161b22; }
+
+/* ── Section pad + background combos ── */
+.section-pad-3-bg-alt { padding: 3rem 0; background: var(--bg-alt); }
+.section-pad-3-bg-soft { padding: 3rem 0; background: var(--bg-soft); }
+.section-pad-25-bg-alt { padding: 2.5rem 0; background: var(--bg-alt); }
+.section-pad-4-bg-alt { padding: 4rem 0; background: var(--bg-alt); }
+.section-pad-15-bg-dark-blue { padding: 1.5rem 0; background: #0a1628; }
+
+/* ── Gallery grids ── */
+.gallery-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.gallery-grid-2col-mt1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.gallery-grid-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+.gallery-grid-colors {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.gallery-grid-4col {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.gallery-grid-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+.gallery-img-span2 { grid-row: span 2; overflow: hidden; border-radius: var(--radius); }
+.gallery-img-cell { overflow: hidden; border-radius: var(--radius); }
+.gallery-img-cell-lg { overflow: hidden; border-radius: var(--radius-lg); }
+
+/* ── Hover scale utilities (replaces onmouseover JS) ── */
+.hover-scale-104:hover { transform: scale(1.04); }
+.hover-scale-106:hover { transform: scale(1.06); }
+.hover-scale-108:hover { transform: scale(1.08); }
+.hover-scale-110:hover { transform: scale(1.1); }
+.color-card-bg img:hover,
+.gallery-img-cell img:hover,
+.gallery-img-cell-lg img:hover { transform: scale(1.05); }
+
+/* ── Image full cover ── */
+.img-full-cover { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+.img-280-cover { width: 100%; height: 280px; object-fit: cover; transition: transform .4s; }
+.img-340-cover { width: 100%; height: 340px; object-fit: cover; transition: transform .4s; }
+.img-240-cover { width: 100%; height: 240px; object-fit: cover; transition: transform .4s; }
+.img-220-cover { width: 100%; height: 220px; object-fit: cover; transition: transform .4s; }
+.img-140-cover { width: 100%; height: 140px; object-fit: cover; transition: transform .4s; }
+.img-180-contain { height: 180px; object-fit: contain; transition: transform .4s; }
+.img-140-contain { height: 140px; object-fit: contain; transition: transform .4s; }
+.img-120-contain { height: 120px; object-fit: contain; transition: transform .4s; }
+.img-80-contain { height: 80px; margin-bottom: .5rem; object-fit: contain; }
+.img-200-contain { width: 100%; height: 200px; object-fit: contain; transition: transform .4s; }
+.img-160-contain { height: 160px; object-fit: contain; padding: 1rem; transition: transform .4s; }
+.img-banner { width: 100%; height: 100%; object-fit: contain; animation: floatBob 4s ease-in-out infinite; }
+.img-banner-rounded { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; animation: floatBob 4s ease-in-out infinite; }
+.img-color-card { width: 100%; border-radius: 16px; margin-bottom: 1.2rem; max-height: 160px; object-fit: cover; }
+
+/* ── Scooter hero box transparent ── */
+.nx-scooter-box-transparent { background: transparent; border: none; overflow: hidden; border-radius: 24px; }
+
+/* ── Color card / swatch card bg ── */
+.color-card-bg {
+    overflow: hidden;
+    border-radius: var(--radius);
+    text-align: center;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+}
+
+/* ── Colour variant row ── */
+.colours-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+.colours-flex-mt15 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+/* ── Highlight pill colour variants ── */
+.highlight-pill-blue { background: rgba(59,130,246,.2); border-color: rgba(59,130,246,.4); }
+
+/* ── Text/layout utils ── */
+.text-grid-auto { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 2rem; }
+.ml-1rem { margin-left: 1rem; }
+
+/* ── Nexus ST variant buttons ── */
+.btn-ghost-green { width: 100%; justify-content: center; border-color: #22c55e; color: #16a34a; }
+.btn-full-cyan { width: 100%; justify-content: center; }
+
+/* ── Footer small note ── */
+.footer-note { margin-top: .5rem; font-size: .72rem; color: rgba(255,255,255,.2); }
+
+/* ── Flex col/center combo ── */
+.flex-col { flex-direction: column; }
+.align-center { align-items: center; }
+
+/* ── K2K section CTA center ── */
+.k2k-cta-center { text-align: center; margin-top: 3rem; }
+
+/* ── Highlights strip flex ── */
+.highlights-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    text-align: center;
+}
+
+/* ── Price/EMI wrapper ── */
+.price-emi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+.emi-card {
+    max-width: 520px;
+    margin: 2rem auto;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+}
+.price-card { max-width: 480px; margin: 2rem auto; }
+
+/* ── CTA inline button ── */
+.btn-cta-mt { margin-top: 1.5rem; display: inline-block; }
+.btn-cta-mt-sm { margin-top: 1rem; display: inline-block; }
+
+/* ── Dealer page snippet styles ── */
+.dealer-showroom-img-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    border: 2px solid rgba(255,255,255,.15);
+}
+.dealer-showroom-img {
+    width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s;
+}
+.dealer-showroom-stats {
+    background: rgba(22,27,34,.95);
+    padding: 1rem 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .5rem;
+    text-align: center;
+}
+.dealer-photo-wrap-lg {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+}
+.dealer-photo-wrap-sm {
+    overflow: hidden;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+.dealer-gallery-large {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+.dealer-gallery-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.dealer-section-map {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+}
+.iframe-map { border: 0; display: block; }
+.map-direction-center { text-align: center; margin-top: 1.5rem; }
+.btn-directions { display: inline-flex; align-items: center; gap: .5rem; }
+
+/* ── Mobile menu highlight link ── */
+.mobile-menu-cta-link { color: var(--green-dark); font-weight: 700; }
+
+/* ── Admin / section labels ── */
+.section-heading-sm { font-size: 1.1rem; font-weight: 700; }
+.sidebar-footer { position: absolute; bottom: 1.5rem; left: 1rem; right: 1rem; }
+.sidebar-user-label { font-size: .75rem; color: var(--muted); margin-bottom: .5rem; }
+.btn-full { width: 100%; }
+.login-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.app-layout-wrap { display: none; }  /* initial hidden state; JS changes it */
+
+/* ── Floating stat positions ── */
+.floating-stat-tl { top: 10%; left: -2%; }
+.floating-stat-tr { top: 10%; right: -2%; }
+.floating-stat-bl { bottom: 15%; left: -2%; }
+
+/* ── Savings page utils ── */
+.savings-hero { min-height: 80vh; display: flex; align-items: center; padding-top: 5rem; }
+.savings-container { width: 100%; }
+.chart-amt-muted { color: rgba(255,255,255,.6); }
+.savings-note {
+    margin-top: 1.5rem;
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    font-size: .82rem;
+    color: rgba(255,255,255,.6);
+}
+.savings-note-bold { color: rgba(255,255,255,.85); }
+.emi-section-bg { padding: 5rem 0; background: #0a0f0a; }
+.emi-outer {
+    max-width: 800px;
+    margin: 2.5rem auto;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 2.5rem;
+}
+.emi-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.emi-label { font-size: .85rem; font-weight: 700; color: var(--muted); display: block; margin-bottom: .6rem; }
+.emi-tenure-row { display: flex; gap: .5rem; }
+.emi-result-box {
+    margin-top: 2rem;
+    background: #161b22;
+    border: 2px solid #22c55e;
+    border-radius: 16px;
+    padding: 1.8rem;
+    text-align: center;
+}
+.emi-result-label { font-size: .8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; margin-bottom: .5rem; }
+.emi-result-value { font-size: 3rem; font-weight: 900; color: #22c55e; line-height: 1; }
+.emi-result-sub { font-size: .75rem; color: var(--muted); margin-top: .4rem; }
+.emi-breakdown { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+.emi-brk-row { border-bottom: 1px solid rgba(255,255,255,0.08); }
+.emi-brk-cell { padding: .7rem; font-size: .86rem; color: var(--muted); }
+.emi-brk-cell-val { padding: .7rem; font-size: .86rem; font-weight: 700; text-align: right; }
+.emi-brk-cell-interest { padding: .7rem; font-size: .86rem; font-weight: 700; color: #ef4444; text-align: right; }
+.emi-brk-cell-total-label { padding: .7rem; font-size: .9rem; font-weight: 700; }
+.emi-brk-cell-total-val { padding: .7rem; font-size: .9rem; font-weight: 900; color: #22c55e; text-align: right; }
+.emi-cta-wrap { text-align: center; margin-top: 1.5rem; }
+
+/* ── Magnus GMAX / Grand hero price tag span ── */
+.price-sub-sm { font-size: .8rem; opacity: .7; }
+
+/* ── Icon box transparent ── */
+.mph-icon-box-transparent { background: transparent; border: none; padding: 0; overflow: hidden; }
+
+/* ── Model badge colour variants ── */
+.badge-amber { background: #f39e0b; }
+.badge-blue { background: #3498db; }
+
+/* ── Spec highlights 2-col grid ── */
+.spec-highlights-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ── Popup / modal ── */
+.form-note-mt { margin-top: .6rem; }
+.popup-link-mt { margin-top: 1rem; display: inline-block; }
+
+/* ── Footer clean ── */
+.footer-clean { border-top: none; padding: 2rem 0; }
+
+/* ── nexus-st / model page inline styles ── */
+.nx-chart-bar-full { height: 100%; }
+.nx-chart-bar-14 { height: 14%; }
+
+
+/* ── Swatch background colors ── */
+/* Nexus ST */
+.sw-midnight-black { background: #1a1a1a; }
+.sw-racing-red { background: #c0392b; }
+.sw-steel-blue { background: #2c3e50; }
+.sw-mango-yellow { background: #f39c12; }
+.sw-pearl-white { background: #ecf0f1; }
+/* Magnus EX */
+.sw-royal-purple { background: #8e44ad; }
+.sw-crimson-red { background: #e74c3c; }
+/* Magnus Grand */
+.sw-midnight-blue { background: #2c3e50; }
+.sw-sunrise-yellow { background: #f1c40f; }
+/* Magnus GMAX */
+.sw-teal { background: #16a085; }
+.sw-rally-red { background: #c0392b; }
+.sw-thunder-black { background: #1a1a1a; }
+/* Magnus Neo */
+.sw-dark-blue { background: #2c3e50; }
+.sw-metallic-black { background: #1a1a1a; }
+/* Reo 80 */
+.sw-sky-blue { background: #3498db; }
+.sw-sunset-orange { background: #e67e22; }
+/* Reo Li */
+.sw-leaf-green { background: #27ae60; }
+.sw-poppy-red { background: #e74c3c; }
+.sw-pure-white { background: #ecf0f1; }
+
+/* ── Color swatch gradient backgrounds (colour section) ── */
+.swatch-grad-red { background: linear-gradient(135deg, #c0392b, #8e1a0e); }
+.swatch-grad-blue { background: linear-gradient(135deg, #1a5276, #2e86c1); }
+.swatch-grad-black { background: linear-gradient(135deg, #1a1a1a, #333); }
+.swatch-grad-grand-red { background: linear-gradient(135deg, #c0392b, #8e1a0e); }
+.swatch-grad-matcha { background: linear-gradient(135deg, #3d6b4a, #2e8b57); }
+.swatch-grad-neo-blue { background: linear-gradient(135deg, #1aa3ff, #005c99); }
+.swatch-grad-pearl { background: linear-gradient(135deg, #ecf0f1, #bdc3c7); }
+.swatch-grad-steel-grey { background: linear-gradient(135deg, #546e7a, #37474f); }
+.swatch-grad-indian-red { background: linear-gradient(135deg, #d32f2f, #b71c1c); }
+
+/* ── magnus-grand / model hero colour text ── */
+.color-gold { color: #f1c40f; }
+.color-amber-txt { color: #f59e0b; }
+
+/* ── Nexus ST special eyebrow ── */
+.nx-eyebrow-cyan { color: #00d4d4; background: rgba(0,212,212,.1); border-color: rgba(0,212,212,.2); }

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Calculator | Compare EV vs Petrol Costs | Ampere | Jai Mata Di Auto</title>
+    <meta name="description" content="Calculate how much you save by switching to an Ampere electric scooter vs petrol. See monthly and yearly savings at Jai Mata Di Auto, Loni.">
+    
+    
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/inline-styles.css">
+    <style>
+        .emi-tenure { background:#1c2128; border:1px solid rgba(255,255,255,0.1); color:#94a3b8; border-radius:8px; padding:.5rem 1rem; cursor:pointer; font-size:.85rem; font-weight:600; transition:.2s; flex:1; }
+        .emi-tenure.active, .emi-tenure:hover { background:#22c55e; color:#fff; border-color:#22c55e; }
+        .emi-select { width:100%;background:#1c2128;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:.85rem 1rem;color:#e2e8f0;font-size:.95rem;cursor:pointer; }
+        .emi-range { width:100%; accent-color:#22c55e; cursor:pointer; }
+    </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Client Configuration & Dynamic CMS Content -->
+  <script src="config.js"></script>
+  <script src="assets/js/site-content.js" defer></script>
+</head>
+<body>
+    <div class="announcement-bar"><span>&#x1F33F; Authorized Ampere by Greaves Dealer &nbsp;|&nbsp; Jai Mata Di Auto, Loni &nbsp;|&nbsp; &#x1F4DE; +91-9890202091</span></div>
+<nav class="navbar" id="navbar"><div class="nav-inner"><a href="index.html" class="nav-logo"><img src="assets/images/jmd-logo.png" alt="Jai Mata Di Auto" class="nav-logo-img"></a><div class="nav-links"><a href="index.html" class="nav-link">Home</a><div class="nav-dropdown"><a href="models.html" class="nav-link">Electric Scooters <span class="dropdown-arrow">&#x25BE;</span></a><div class="dropdown-menu"><a href="nexus-st.html">Nexus ST</a><a href="magnus-ex.html">Magnus EX</a><a href="magnus-grand.html">Magnus Grand</a><a href="magnus-gmax.html">Magnus GMAX</a><a href="magnus-neo.html">Magnus Neo</a><a href="reo-80.html">Reo 80</a><a href="reo-li.html">Reo Li</a></div></div><a href="test-ride.html" class="nav-link">Book Test Ride</a><a href="dealer.html" class="nav-link">Dealer</a><a href="spare-parts.html" class="nav-link">Spare Parts</a><a href="savings.html" class="nav-link active">Savings</a><a href="contact.html" class="nav-link">Contact</a></div><a href="test-ride.html" class="btn-nav-cta">Book a Test Ride</a><button class="hamburger" id="hamburger" title="Open menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button></div></nav>
+    <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-inner"><a href="index.html">&#x1F3E0; Home</a><a href="models.html">&#x1F6F5; All Models</a><a href="nexus-st.html">&nbsp;&nbsp;&#x21B3; Nexus ST</a><a href="magnus-ex.html">&nbsp;&nbsp;&#x21B3; Magnus EX</a><a href="magnus-grand.html">&nbsp;&nbsp;&#x21B3; Magnus Grand</a><a href="magnus-gmax.html">&nbsp;&nbsp;&#x21B3; Magnus GMAX</a><a href="magnus-neo.html">&nbsp;&nbsp;&#x21B3; Magnus Neo</a><a href="reo-80.html">&nbsp;&nbsp;&#x21B3; Reo 80</a><a href="reo-li.html">&nbsp;&nbsp;&#x21B3; Reo Li</a><a href="test-ride.html" class="mobile-menu-cta-link">&#x1F4C5; Book Test Ride</a><a href="spare-parts.html">Spare Parts</a><a href="savings.html">&#x1F4A1; Savings Calculator</a><a href="dealer.html">&#x1F3EA; Dealer</a><a href="contact.html">&#x1F4DE; Contact</a></div></div>
+
+    <!-- SAVINGS CALCULATOR HERO -->
+    <section class="savings-section savings-hero" id="savings">
+        <div class="container savings-container">
+            <div class="savings-wrapper">
+                <div class="savings-left">
+                    <span class="section-eyebrow">EV Savings Calculator</span>
+                    <h2>How Much Will<br>You <span class="text-green">Save?</span></h2>
+                    <p>Compare petrol vs electric costs based on your daily ride. Switch to Ampere and save thousands every month!</p>
+                    <div class="savings-calc">
+                        <div class="calc-input">
+                            <label>Daily Commute Distance</label>
+                            <div class="slider-row">
+                                <input type="range" id="kmSlider" min="10" max="150" value="40" class="range-slider" title="Daily commute distance in kilometres" aria-label="Daily commute distance">
+                                <span id="kmDisplay" class="slider-display">40 km/day</span>
+                            </div>
+                        </div>
+                        <div class="calc-results">
+                            <div class="result-card">
+                                <div class="result-label">Monthly Savings</div>
+                                <div class="result-amount">&#x20B9; <span id="monthlySaving">3,200</span></div>
+                            </div>
+                            <div class="result-card highlight-card">
+                                <div class="result-label">Yearly Savings</div>
+                                <div class="result-amount">&#x20B9; <span id="yearlySaving">38,400</span></div>
+                            </div>
+                        </div>
+                        <div class="savings-note">
+                            &#x1F4CA; <strong class="savings-note-bold">Based on:</strong> Petrol &#x20B9;100/litre &#64; 40km/L vs EV &#x20B9;8/unit &#64; 30km/unit. Includes avg. &#x20B9;500/month maintenance savings.
+                        </div>
+                        <a href="test-ride.html" class="btn-primary btn-cta-mt">Start Saving &#8212; Book Test Ride &#x2192;</a>
+                    </div>
+                </div>
+                <div class="savings-right">
+                    <div class="savings-chart">
+                        <div class="chart-label-top">Monthly Cost Comparison</div>
+                        <div class="chart-bars">
+                            <div class="chart-col">
+                                <div class="bar-wrap"><div class="chart-bar petrol-bar nx-chart-bar-full" id="petrolBar"></div></div>
+                                <div class="chart-name petrol-name">&#x26FD; Petrol</div>
+                                <div class="chart-amount chart-amt-muted" id="petrolAmt">&#x20B9;3,750</div>
+                            </div>
+                            <div class="chart-col">
+                                <div class="bar-wrap"><div class="chart-bar ev-bar nx-chart-bar-14" id="evBar"></div></div>
+                                <div class="chart-name ev-name">&#x26A1; Electric</div>
+                                <div class="chart-amount" id="evAmt">&#x20B9;533</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EMI CALCULATOR -->
+    <section class="emi-section-bg">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-eyebrow">EMI Calculator</span>
+                <h2>Calculate Your <span class="text-green">Monthly EMI</span></h2>
+                <p class="color-muted mt-10">Choose any model. Adjust down payment and tenure. See your EMI live &#8212; no surprises.</p>
+            </div>
+            <div class="emi-outer">
+                <div class="emi-form-grid">
+                    <div>
+                        <label class="emi-label">Select Model</label>
+                        <select id="emiModel" onchange="calcEMI()" class="emi-select" title="Select scooter model">
+                            <option value="138000">Nexus ST &#8212; &#x20B9;1,38,000/-</option>
+                            <option value="115000">Magnus GMAX &#8212; &#x20B9;1,15,000/-</option>
+                            <option value="110000">Magnus Grand &#8212; &#x20B9;1,10,000/-</option>
+                            <option value="100000">Magnus Neo &#8212; &#x20B9;1,00,000/-</option>
+                            <option value="95000">Magnus EX &#8212; &#x20B9;95,000/-</option>
+                            <option value="68000">Reo 80 &#8212; &#x20B9;68,000/-</option>
+                            <option value="65000">Reo Li &#8212; &#x20B9;65,000/-</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="emi-label">Loan Tenure</label>
+                        <div class="emi-tenure-row">
+                            <button class="emi-tenure active" onclick="setTenure(12,this)">12 mo</button>
+                            <button class="emi-tenure" onclick="setTenure(24,this)">24 mo</button>
+                            <button class="emi-tenure" onclick="setTenure(36,this)">36 mo</button>
+                            <button class="emi-tenure" onclick="setTenure(48,this)">48 mo</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="emi-label">Down Payment: &#x20B9;<span id="dpDisplay">10,000</span></label>
+                        <input type="range" id="dpSlider" min="0" max="50000" step="1000" value="10000" oninput="calcEMI()" class="emi-range" title="Down payment amount" aria-label="Down payment">
+                    </div>
+                    <div>
+                        <label class="emi-label">Interest Rate: <span id="rateDisplay">9.5</span>% p.a.</label>
+                        <input type="range" id="rateSlider" min="7" max="15" step="0.5" value="9.5" oninput="calcEMI()" class="emi-range" title="Annual interest rate" aria-label="Interest rate">
+                    </div>
+                </div>
+                <!-- EMI Result -->
+                <div class="emi-result-box">
+                    <div class="emi-result-label">Monthly EMI</div>
+                    <div class="emi-result-value" id="emiOutput">&#x20B9;&#8212;</div>
+                    <div class="emi-result-sub" id="emiSubtext"></div>
+                </div>
+                <!-- Breakdown -->
+                <table class="emi-breakdown">
+                    <tr class="emi-brk-row"><td class="emi-brk-cell">Ex-showroom Price</td><td class="emi-brk-cell-val" id="brkPrice">&#x20B9;&#8212;</td></tr>
+                    <tr class="emi-brk-row"><td class="emi-brk-cell">Down Payment</td><td class="emi-brk-cell-val" id="brkDown">&#x20B9;&#8212;</td></tr>
+                    <tr class="emi-brk-row"><td class="emi-brk-cell">Loan Amount</td><td class="emi-brk-cell-val" id="brkLoan">&#x20B9;&#8212;</td></tr>
+                    <tr class="emi-brk-row"><td class="emi-brk-cell">Total Interest</td><td class="emi-brk-cell-interest" id="brkInterest">&#x20B9;&#8212;</td></tr>
+                    <tr><td class="emi-brk-cell-total-label">Total Amount Paid</td><td class="emi-brk-cell-total-val" id="brkTotal">&#x20B9;&#8212;</td></tr>
+                </table>
+                <div class="emi-cta-wrap"><a href="test-ride.html" class="btn-primary d-inline-block">&#x1F6F5; Book Test Ride &amp; Discuss Finance &#x2192;</a></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer"><div class="container"><div class="footer-bottom footer-clean"><p>&copy; 2025 Jai Mata Di Auto &#8212; Authorized Ampere by Greaves Dealer, Loni, Maharashtra.</p></div></div></footer>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/animations.js"></script>
+    <script>
+        // EMI Calculator
+        var emiTenure = 12;
+        function setTenure(n, btn) {
+            emiTenure = n;
+            document.querySelectorAll('.emi-tenure').forEach(function(b){ b.classList.remove('active'); });
+            btn.classList.add('active');
+            calcEMI();
+        }
+        function fmtRs(n) {
+            return '\u20B9' + Math.round(n).toLocaleString('en-IN');
+        }
+        function calcEMI() {
+            var price = parseInt(document.getElementById('emiModel').value);
+            var dp    = parseInt(document.getElementById('dpSlider').value);
+            var rate  = parseFloat(document.getElementById('rateSlider').value);
+            var n     = emiTenure;
+            var P     = Math.max(0, price - dp);
+            document.getElementById('dpDisplay').textContent   = dp.toLocaleString('en-IN');
+            document.getElementById('rateDisplay').textContent = rate;
+            document.getElementById('brkPrice').textContent    = fmtRs(price);
+            document.getElementById('brkDown').textContent     = fmtRs(dp);
+            document.getElementById('brkLoan').textContent     = fmtRs(P);
+            if (P <= 0) {
+                document.getElementById('emiOutput').textContent = fmtRs(0);
+                document.getElementById('brkInterest').textContent = fmtRs(0);
+                document.getElementById('brkTotal').textContent = fmtRs(dp);
+                return;
+            }
+            var r   = rate / 12 / 100;
+            var emi = P * r * Math.pow(1+r,n) / (Math.pow(1+r,n) - 1);
+            var totalPay = emi * n;
+            var interest = totalPay - P;
+            document.getElementById('emiOutput').textContent    = fmtRs(emi);
+            document.getElementById('emiSubtext').textContent   = 'per month for ' + n + ' months @ ' + rate + '% p.a.';
+            document.getElementById('brkInterest').textContent  = fmtRs(interest);
+            document.getElementById('brkTotal').textContent     = fmtRs(totalPay + dp);
+        }
+        calcEMI();
+
+        // Savings Calculator (existing logic)
+        var kmSlider = document.getElementById('kmSlider');
+        if (kmSlider) {
+            function updateSavings() {
+                var km = parseInt(kmSlider.value);
+                var monthlyKm = km * 30;
+                var petrolCost = (monthlyKm / 40) * 100;
+                var evCost = (monthlyKm / 30) * 8;
+                var maintenance = 500;
+                var monthly = Math.round((petrolCost - evCost) + maintenance);
+                var yearly  = monthly * 12;
+                document.getElementById('kmDisplay').textContent = km + ' km/day';
+                document.getElementById('monthlySaving').textContent = monthly.toLocaleString('en-IN');
+                document.getElementById('yearlySaving').textContent  = yearly.toLocaleString('en-IN');
+                document.getElementById('petrolAmt').textContent = '\u20B9' + Math.round(petrolCost).toLocaleString('en-IN');
+                document.getElementById('evAmt').textContent = '\u20B9' + Math.round(evCost).toLocaleString('en-IN');
+                var maxCost = Math.max(petrolCost, evCost, 1);
+                var pb = document.getElementById('petrolBar');
+                var eb = document.getElementById('evBar');
+                if (pb) pb.style.height = (petrolCost / maxCost * 100) + '%';
+                if (eb) eb.style.height = (evCost / maxCost * 100) + '%';
+            }
+            kmSlider.addEventListener('input', updateSavings);
+            updateSavings();
+        }
+    </script>
+</body>
+</html>
+
+
+

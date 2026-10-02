@@ -1,0 +1,528 @@
+<!DOCTYPE html><html lang="en"><head><style>*, *::before, *::after { cursor: auto !important; }</style><style>
+            @keyframes marqueeMove {
+                0%   { transform: translateX(0); }
+                100% { transform: translateX(-30%); }
+            }
+            .announcement-bar { overflow: hidden; white-space: nowrap; }
+            .announcement-bar span { padding-right: 80px; }
+        </style><style>
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%       { transform: translateX(-8px); }
+            40%       { transform: translateX(8px); }
+            60%       { transform: translateX(-5px); }
+            80%       { transform: translateX(5px); }
+        }
+    </style><style>
+        .gradient-text {
+            background: linear-gradient(
+                90deg,
+                #22c55e 0%,
+                #4ade80 25%,
+                #22c55e 50%,
+                #4ade80 75%,
+                #22c55e 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientText 4s ease infinite;
+        }
+
+        .text-glow {
+            animation: textGlowSubtle 3.5s ease-in-out infinite;
+        }
+
+        .gradient-text, [data-gradient-text="true"] {
+            animation: gradientText 4s ease infinite !important;
+        }
+
+        [data-float="true"] {
+            animation: float 3.2s ease-in-out infinite !important;
+        }
+    </style><style>
+        @keyframes focusPulse {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.01); }
+            100% { transform: scale(1); }
+        }
+    </style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Client Configuration & Dynamic CMS Content -->
+  <script src="config.js"></script>
+  <script src="assets/js/site-content.js" defer></script>
+</head><body class="page-models">﻿
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Electric Scooter Models | Ampere by Greaves | Jai Mata Di Auto - Loni</title>
+    <meta name="description" content="Compare all Ampere by Greaves electric scooters. Nexus ST, Magnus EX, Magnus Grand, Magnus GMAX, Reo 80, Reo Li. Authorized dealer in Loni, Maharashtra.">
+    
+    
+    
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        body { font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .models-hero {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 18% 22%, rgba(0, 208, 209, 0.2), transparent 24%),
+                radial-gradient(circle at 82% 18%, rgba(34, 197, 94, 0.16), transparent 26%),
+                linear-gradient(145deg, #071018 0%, #091a28 44%, #0b2231 100%);
+            padding: 6.5rem 0 4.5rem;
+            text-align: center;
+        }
+        .models-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, transparent 0, transparent 24%, rgba(255, 255, 255, 0.04) 24%, transparent 25%),
+                linear-gradient(transparent 0, transparent 24%, rgba(255, 255, 255, 0.04) 24%, transparent 25%);
+            background-size: 5rem 5rem;
+            opacity: 0.16;
+            pointer-events: none;
+        }
+        .models-hero .container { position: relative; z-index: 1; }
+        .models-hero h1 {
+            font-family: 'Sora', 'Manrope', sans-serif;
+            font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 1rem;
+            line-height: 1.02;
+        }
+        .models-hero p { color: rgba(226,232,240,0.78); font-size: 1.02rem; max-width: 620px; margin: 0 auto; line-height: 1.8; }
+        .all-models-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; padding: 5rem 0; }
+        .model-card-v2 {
+            background: rgba(8, 17, 25, 0.92);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 1.6rem;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 18px 44px rgba(0,0,0,0.2);
+        }
+        .model-card-v2:hover { border-color: rgba(0,208,209,0.22); box-shadow: 0 26px 56px rgba(0,0,0,0.28); transform: translateY(-6px); }
+        .mc-image {
+            height: 220px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0.75rem 1rem 0.5rem;
+        }
+        .mc-image::after {
+            content: '';
+            position: absolute;
+            inset: auto 14% 6%;
+            height: 18%;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 68%);
+            filter: blur(18px);
+        }
+        .neo-color { background: linear-gradient(135deg, #04182d 0%, #0a3a63 55%, #0d5c97 100%); }
+        .mc-product-shot {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 0.2rem 0.3rem 0;
+            filter: drop-shadow(0 22px 34px rgba(0,0,0,0.32));
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+        .model-card-v2:hover .mc-product-shot {
+            transform: translateY(-8px) scale(1.02);
+            filter: drop-shadow(0 30px 46px rgba(0,0,0,0.38));
+        }
+        .mc-image-fallback {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            place-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 1.6rem;
+            text-align: center;
+            border-radius: 1.2rem;
+            border: 1px solid rgba(255,255,255,0.12);
+            background:
+                radial-gradient(circle at 20% 20%, rgba(34,197,94,0.18), transparent 30%),
+                radial-gradient(circle at 82% 18%, rgba(124,58,237,0.22), transparent 30%),
+                linear-gradient(145deg, rgba(14,22,34,0.96), rgba(24,18,45,0.92));
+        }
+        .mc-image-fallback strong {
+            display: block;
+            color: #fff;
+            font-family: 'Sora', 'Manrope', sans-serif;
+            font-size: 1.55rem;
+            letter-spacing: 0.04em;
+        }
+        .mc-image-fallback span {
+            display: block;
+            margin-top: 0.7rem;
+            color: rgba(226,232,240,0.66);
+            font-size: 0.84rem;
+            line-height: 1.6;
+        }
+        .mc-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 2;
+            background: rgba(248,250,252,0.92);
+            color: #031117;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 50px;
+        }
+        .mc-model-label {
+            position: absolute;
+            left: 14px;
+            bottom: 12px;
+            z-index: 2;
+            padding: 0.42rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(4, 13, 20, 0.76);
+            color: rgba(255,255,255,0.86);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+        .mc-body { padding: 1.45rem; }
+        .mc-body h3 {
+            font-family: 'Sora', 'Manrope', sans-serif;
+            font-size: 1.16rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .mc-body p { font-size: 0.9rem; color: rgba(226,232,240,0.68); margin-bottom: 1.2rem; line-height: 1.7; }
+        .mc-specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.55rem; margin-bottom: 1.2rem; }
+        .mc-spec {
+            text-align: center;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 0.75rem 0.3rem;
+        }
+        .mc-spec-val { font-size: 0.95rem; font-weight: 700; color: #fff; }
+        .mc-spec-key { font-size: 0.65rem; color: rgba(226,232,240,0.54); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+        .mc-btns { display: flex; gap: 8px; }
+        .mc-btns a { flex: 1; text-align: center; padding: 0.65rem 0.5rem; border-radius: 50px; font-size: 0.82rem; font-weight: 600; }
+        .mc-btns .btn-outline-dark { border-color: rgba(255,255,255,0.14); color: #e2e8f0; }
+        .mc-btns .btn-outline-dark:hover { background: rgba(255,255,255,0.06); color: #fff; }
+        @media (max-width: 900px) { .all-models-grid { grid-template-columns: repeat(2,1fr); } }
+        @media (max-width: 580px) {
+            .all-models-grid { grid-template-columns: 1fr; }
+            .mc-image { height: 200px; }
+        }
+    </style>
+    <link rel="stylesheet" href="assets/css/animations.css">
+
+
+
+
+    <div class="announcement-bar">
+        <span style="display: inline-block; animation: 25s linear 0s infinite normal none running marqueeMove;">🌿 Authorized Ampere by Greaves Dealer &nbsp;|&nbsp; Jai Mata Di Auto, Loni, Maharashtra &nbsp;|&nbsp; 📞 +91-9890202091</span>
+    </div>
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/images/jmd-logo.png" alt="Jai Mata Di Auto" class="nav-logo-img">
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-dropdown">
+                    <a href="models.html" class="nav-link active">Electric Scooters <span class="dropdown-arrow">▾</span></a>
+                    <div class="dropdown-menu">
+                        <a href="nexus-st.html" style="border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; padding-bottom: 0px; transition: 0.3s;">Nexus ST</a>
+                        <a href="magnus-ex.html">Magnus EX</a>
+                        <a href="magnus-grand.html" style="border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; padding-bottom: 0px; transition: 0.3s;">Magnus Grand</a>
+                        <a href="magnus-gmax.html">Magnus GMAX</a>
+                        <a href="magnus-neo.html">Magnus Neo</a><a href="reo-80.html">Reo 80</a>
+                        <a href="reo-li.html">Reo Li</a>
+                    </div>
+                </div>
+                <a href="test-ride.html" class="nav-link">Book Test Ride</a>
+                <a href="spare-parts.html" class="nav-link">Spare Parts</a><a href="dealer.html" class="nav-link">Dealer</a>
+                <a href="savings.html" class="nav-link">Savings</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+            <a href="test-ride.html" class="btn-nav-cta">Book a Test Ride</a>
+            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-inner">
+            <a href="index.html">Home</a><a href="models.html">All Models</a>
+            <a href="nexus-st.html">Nexus ST</a><a href="magnus-ex.html">Magnus EX</a>
+            <a href="magnus-grand.html">Magnus Grand</a><a href="magnus-gmax.html">Magnus GMAX</a>
+            <a href="magnus-neo.html">Magnus Neo</a><a href="reo-80.html">Reo 80</a><a href="reo-li.html">Reo Li</a>
+            <a href="test-ride.html" class="mobile-menu-cta-link">Book Test Ride</a><a href="spare-parts.html">Spare Parts</a><a href="savings.html">Savings</a><a href="contact.html">Contact</a>
+        </div>
+    </div>
+
+    <div class="models-hero">
+        <div class="container reveal-up visible" style="transition-delay: 0s;">
+            <span class="section-eyebrow jmd-global-eba2c3">All Models</span>
+            <h1>Choose Your Perfect <span class="text-green">Ampere</span></h1>
+            <p>From the flagship Nexus ST to the budget-friendly Reo Li — find the right EV for your daily commute.</p>
+        </div>
+    </div>
+
+    <section class="lineup-section" id="lineup">
+        <div class="container">
+            <div class="section-header reveal-up visible">
+                <span class="section-eyebrow">Featured lineup</span>
+                <h2>Choose the ride that fits your day</h2><div class="section-divider"></div>
+                <p>Each card keeps the decision simple: one image, three key facts, and a direct path to the model page.</p>
+            </div>
+            <div class="lineup-grid">
+
+                <!-- NEXUS ST HERO SECTION -->
+                <div class="product-hero-section nexus reveal-up stagger-item visible" style="transition-delay: 0s;">
+                    <div class="product-illustration">
+                        <img src="assets/images/nexus/nexus-zanskar-aqua.png" alt="Ampere Nexus ST" loading="lazy" onerror="this.src="assets/images/nexus/Nexus_Black.webp"" style="animation: 0.6s ease 0s 1 normal none running fadeIn;">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-label">Flagship Premium</div>
+                        <h3 class="product-name">Ampere <span class="text-green">Nexus ST</span></h3>
+                        <p class="product-tagline">Smart connected scooter with TFT display, Wi-Fi integration, and premium range.</p>
+                        <div class="product-specs-bar">
+                            <div class="product-spec-item">
+                                <div class="spec-value">136 km</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">93 km/h</div>
+                                <div class="spec-label">Top Speed</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">3.3 hrs</div>
+                                <div class="spec-label">Charge Time</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">TFT Display</div>
+                                <div class="spec-label">Smart Tech</div>
+                            </div>
+                        </div>
+                        <a href="nexus-st.html" class="btn-primary jmd-global-f1a129">Explore Model</a>
+                    </div>
+                </div>
+
+                <!-- MAGNUS EX HERO SECTION -->
+                <div class="product-hero-section magnus-ex reveal-up stagger-item visible" style="transition-delay: 0.08s;">
+                    <div class="product-illustration">
+                        <img src="assets/images/magnus-ex/download-(1).jpg" alt="Ampere Magnus EX" loading="lazy" onerror="this.src="assets/images/magnus-ex/download.jpg"" style="animation: 0.6s ease 0s 1 normal none running fadeIn;">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-label">Smart Commuter</div>
+                        <h3 class="product-name">Magnus <span class="text-green">EX</span></h3>
+                        <p class="product-tagline">World's first removable battery scooter. Charge like your phone, anywhere.</p>
+                        <div class="price-badge">₹89,999</div>
+                        <div class="product-specs-bar">
+                            <div class="product-spec-item">
+                                <div class="spec-value">90 km</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">53 km/h</div>
+                                <div class="spec-label">Speed</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">3 Modes</div>
+                                <div class="spec-label">Riding</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">Removable</div>
+                                <div class="spec-label">Battery</div>
+                            </div>
+                        </div>
+                        <a href="magnus-ex.html" class="btn-primary jmd-global-f1a129">Explore Model</a>
+                    </div>
+                </div>
+
+                <!-- MAGNUS GRAND HERO SECTION -->
+                <div class="product-hero-section magnus-grand reveal-up stagger-item visible" style="transition-delay: 0.16s;">
+                    <div class="product-illustration">
+                        <img src="assets/images/magnus-grand/ocean_grand_2.png" alt="Ampere Magnus Grand" loading="lazy" onerror="this.src="assets/images/magnus-grand/Grand-desktop2.png"" style="animation: 0.6s ease 0s 1 normal none running fadeIn;">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-label">Family Favorite</div>
+                        <h3 class="product-name">Magnus <span class="text-green">Grand</span></h3>
+                        <p class="product-tagline">Roomy, comfortable, and safe. Built for families with a 20% stronger chassis.</p>
+                        <div class="price-badge">₹89,999</div>
+                        <div class="product-specs-bar">
+                            <div class="product-spec-item">
+                                <div class="spec-value">80 km</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">50 km/h</div>
+                                <div class="spec-label">Speed</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">LFP</div>
+                                <div class="spec-label">Battery</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">5 Years</div>
+                                <div class="spec-label">Warranty</div>
+                            </div>
+                        </div>
+                        <a href="magnus-grand.html" class="btn-primary jmd-global-f1a129">Explore Model</a>
+                    </div>
+                </div>
+
+                <!-- MAGNUS GMAX HERO SECTION -->
+                <div class="product-hero-section magnus-gmax reveal-up stagger-item visible" style="transition-delay: 0.24s;">
+                    <div class="product-illustration">
+                        <img src="assets/images/magnus-gmax/magnus-g-max-monsoon-blue.jpeg" alt="Ampere Magnus GMAX" loading="lazy" onerror="this.src="assets/images/magnus-gmax/gmax-banner_new.png"" style="animation: 0.6s ease 0s 1 normal none running fadeIn;">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-label">Max Range Champion</div>
+                        <h3 class="product-name">Magnus <span class="text-green">GMAX</span></h3>
+                        <p class="product-tagline">100+ km true range. The long-distance commuter with premium storage and LFP safety.</p>
+                        <div class="price-badge">₹94,999</div>
+                        <div class="product-specs-bar">
+                            <div class="product-spec-item">
+                                <div class="spec-value">142 km</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">65 km/h</div>
+                                <div class="spec-label">Speed</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">3 kWh</div>
+                                <div class="spec-label">LFP Battery</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">33 L</div>
+                                <div class="spec-label">Boot</div>
+                            </div>
+                        </div>
+                        <a href="magnus-gmax.html" class="btn-primary jmd-global-f1a129">Explore Model</a>
+                    </div>
+                </div>
+
+                <!-- MAGNUS NEO HERO SECTION -->
+                <div class="product-hero-section magnus-neo reveal-up stagger-item visible" style="transition-delay: 0.32s;">
+                    <div class="product-illustration">
+                        <img src="assets/images/magnus-neo/magnusneo-ocean-blue.png" alt="Ampere Magnus Neo" loading="lazy" onerror="this.src="assets/images/magnus-neo/neo-masthead2.png"" style="animation: 0.6s ease 0s 1 normal none running fadeIn;">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-label">India's Most Loved</div>
+                        <h3 class="product-name">Magnus <span class="text-green">Neo</span></h3>
+                        <p class="product-tagline">Fresh, modern design with LFP battery and 20% stronger chassis. Best value.</p>
+                        <div class="price-badge">₹86,999</div>
+                        <div class="product-specs-bar">
+                            <div class="product-spec-item">
+                                <div class="spec-value">85 km</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">65 km/h</div>
+                                <div class="spec-label">Speed</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">LFP</div>
+                                <div class="spec-label">Battery</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">75,000 km</div>
+                                <div class="spec-label">Warranty</div>
+                            </div>
+                        </div>
+                        <a href="magnus-neo.html" class="btn-primary jmd-global-f1a129" style="">Explore Model</a>
+                    </div>
+                </div>
+
+                <!-- REO 80 HERO SECTION -->
+                <div class="product-hero-section reveal-up stagger-item jmd-global-f64c51 visible" style="transition-delay: 0.4s;">
+                    <div class="product-illustration">
+                        <img src="assets/images/reo-80/reo-80-blue.png" alt="Ampere Reo 80" loading="lazy" onerror="this.src="assets/images/reo-80/reo-80-white.png"" style="animation: 0.6s ease 0s 1 normal none running fadeIn;">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-label">Budget Friendly</div>
+                        <h3 class="product-name">Ampere <span class="text-green">Reo 80</span></h3>
+                        <p class="product-tagline">Compact and practical for short-distance city commutes. No licence required.</p>
+                        <div class="product-specs-bar">
+                            <div class="product-spec-item">
+                                <div class="spec-value">80 km</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">25 km/h</div>
+                                <div class="spec-label">Speed</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">No License</div>
+                                <div class="spec-label">Class</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">Lightweight</div>
+                                <div class="spec-label">Design</div>
+                            </div>
+                        </div>
+                        <a href="reo-80.html" class="btn-primary jmd-global-f1a129">Explore Model</a>
+                    </div>
+                </div>
+
+                <!-- REO LI HERO SECTION -->
+                <div class="product-hero-section reveal-up stagger-item jmd-global-4fdbf2 visible" style="transition-delay: 0.4s;">
+                    <div class="product-illustration">
+                        <img src="assets/images/reo-li/s_gallery-red01.png" alt="Ampere Reo Li" loading="lazy" onerror="this.src="assets/images/reo-li/s_gallery-red02.png"" style="animation: 0.6s ease 0s 1 normal none running fadeIn;">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-label">Last Mile</div>
+                        <h3 class="product-name">Ampere <span class="text-green">Reo Li</span></h3>
+                        <p class="product-tagline">Lightweight, affordable, and easy to charge anywhere. Best for last-mile connectivity.</p>
+                        <div class="product-specs-bar">
+                            <div class="product-spec-item">
+                                <div class="spec-value">60 km</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">25 km/h</div>
+                                <div class="spec-label">Speed</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">4 hrs</div>
+                                <div class="spec-label">Charge Time</div>
+                            </div>
+                            <div class="product-spec-item">
+                                <div class="spec-value">Easy</div>
+                                <div class="spec-label">Storage</div>
+                            </div>
+                        </div>
+                        <a href="reo-li.html" class="btn-primary jmd-global-f1a129">Explore Model</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom jmd-global-c0edb3">
+                <p>© 2024 Jai Mata Di Auto — Authorized Ampere by Greaves Dealer, Loni, Maharashtra.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/animations.js"></script>
+
+
+
+
+
+
+<div class="jmd-block" data-type="text"><p class="jmd-block" contenteditable="false" style="padding:10px 0;font-size:16px;color:#333;line-height:1.6">Click to edit this paragraph. Add your content here.</p></div></body></html>

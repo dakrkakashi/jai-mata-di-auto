@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JMD Admin — Pages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/css/admin.css">
+  <script src="../config.js"></script>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="../assets/images/jmd-logo.png" alt="JMD" onerror="this.style.display='none'">
+      <div class="sidebar-brand-text"><strong>JMD Admin</strong><div class="sidebar-live-badge">Live</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="/admin/dashboard.html" class="nav-item"><span class="icon">📊</span> Dashboard</a>
+      <a href="/admin/editor.html" class="nav-item"><span class="icon">✏️</span> Page Editor</a>
+      <a href="/admin/pages.html" class="nav-item active"><span class="icon">📄</span> Pages</a>
+      <div class="nav-section-label">Content</div>
+      <a href="/admin/leads.html" class="nav-item"><span class="icon">👥</span> Leads &amp; CRM</a>
+      <a href="/admin/media.html" class="nav-item"><span class="icon">🖼️</span> Media</a>
+      <a href="/admin/spare-parts.html" class="nav-item"><span class="icon">🔧</span> Spare Parts</a>
+      <div class="nav-section-label">Tools</div>
+      <a href="/admin/settings.html" class="nav-item"><span class="icon">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info"><div class="admin-avatar">A</div><div><div class="admin-name">Administrator</div><div class="admin-role">Super Admin</div></div></div>
+      <button class="btn-logout" onclick="logout()">⏻ Logout</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <div class="topbar">
+      <span class="topbar-title">📄 Pages</span>
+      <div class="topbar-actions">
+        <button class="topbar-btn" onclick="loadPages()">🔄 Refresh</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="pages-grid" id="pages-grid">
+        <div class="empty-state"><div class="icon">📄</div><p>Loading pages…</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/admin/js/api.js"></script>
+<script src="/admin/js/toast.js"></script>
+<script src="/admin/js/auth.js"></script>
+<script>
+async function loadPages(){
+  try {
+    const data = await API.get('/api/admin/pages');
+    const grid = document.getElementById('pages-grid');
+    if (!grid) return;
+    grid.replaceChildren();
+
+    const pages = Array.isArray(data) ? data : (data?.pages || []);
+    if (!pages.length){
+      const empty = document.createElement('div');
+      empty.className = 'empty-state';
+      const icon = document.createElement('div');
+      icon.className = 'icon';
+      icon.textContent = '📄';
+      const p = document.createElement('p');
+      p.textContent = 'No pages found';
+      empty.append(icon, p);
+      grid.appendChild(empty);
+      return;
+    }
+
+    pages.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'page-card';
+
+      const icon = document.createElement('div');
+      icon.className = 'page-icon';
+      icon.textContent = '📄';
+
+      const name = document.createElement('div');
+      name.className = 'page-name';
+      name.textContent = p;
+
+      const url = document.createElement('div');
+      url.className = 'page-url';
+      url.style.cssText = 'color:var(--text3);font-size:11px;';
+      url.textContent = `/${p}`;
+
+      const actions = document.createElement('div');
+      actions.className = 'page-actions';
+
+      const editLink = document.createElement('a');
+      editLink.href = `/admin/editor.html?page=${encodeURIComponent(p)}`;
+      editLink.className = 'btn btn-sm btn-primary';
+      editLink.title = 'Edit content';
+      editLink.textContent = '✏️ Edit Content';
+
+      const viewLink = document.createElement('a');
+      viewLink.href = `/${p}`;
+      viewLink.target = '_blank';
+      viewLink.className = 'btn btn-sm btn-secondary';
+      viewLink.title = 'View page';
+      viewLink.textContent = '👁 View';
+
+      actions.append(editLink, viewLink);
+      card.append(icon, name, url, actions);
+      grid.appendChild(card);
+    });
+  } catch { Toast.error('Failed to load pages'); }
+}
+
+async function init(){ const ok = await checkAuth(); if(!ok) return; await loadPages(); }
+init();
+</script>
+</body>
+</html>

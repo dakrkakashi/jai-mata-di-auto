@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Spare Parts Store | Jai Mata Di Auto | Loni</title>
+<meta name="description" content="Browse genuine Ampere spare parts at Jai Mata Di Auto, Loni. Body panels, lighting, hardware, and more for your electric scooter.">
+
+
+
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/spare-parts.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Client Configuration & Dynamic CMS Content -->
+  <script src="config.js"></script>
+  <script src="assets/js/site-content.js" defer></script>
+</head>
+<body class="page-spare-parts">
+
+<a href="https://wa.me/919890202091?text=Hi%2C%20I%20need%20spare%20parts%20for%20my%20Ampere%20scooter." target="_blank" rel="noopener" class="float-wa" id="floatWA" aria-label="WhatsApp Enquiry">
+  <span class="float-wa-icon">WA</span>
+  <span class="float-wa-label">WhatsApp Enquiry</span>
+</a>
+<button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+
+<div class="mobile-sticky-cta" id="mobileStickyCta">
+  <a href="https://wa.me/919890202091?text=Hi%2C%20I%20want%20spare%20parts%20for%20my%20Ampere%20scooter." target="_blank" rel="noopener" class="sticky-call">WhatsApp</a>
+  <a href="test-ride.html" class="sticky-ride">Book Test Ride</a>
+</div>
+
+<div class="announcement-bar">
+  <span>Genuine Ampere spare parts | Jai Mata Di Auto, Loni | Order via WhatsApp</span>
+</div>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Jai Mata Di Auto home">
+      <img src="assets/images/jmd-logo.png" alt="Jai Mata Di Auto" class="nav-logo-img">
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="models.html" class="nav-link">Scooters</a>
+      <a href="spare-parts.html" class="nav-link active">Spare Parts</a>
+      <a href="#dealer" class="nav-link">Dealer</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <a href="test-ride.html" class="btn-nav-cta">Book Test Ride</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    <a href="index.html">Home</a>
+    <a href="models.html">All Electric Scooters</a>
+    <a href="spare-parts.html" class="active">Spare Parts</a>
+    <a href="nexus-st.html">Nexus ST</a>
+    <a href="magnus-ex.html">Magnus EX</a>
+    <a href="magnus-grand.html">Magnus Grand</a>
+    <a href="magnus-gmax.html">Magnus GMAX</a>
+    <a href="magnus-neo.html">Magnus Neo</a>
+    <a href="reo-80.html">Reo 80</a>
+    <a href="reo-li.html">Reo Li</a>
+    <a href="#dealer">Dealer</a>
+    <a href="test-ride.html" class="mobile-menu-cta-link">Book Test Ride</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
+
+<section class="sp-hero">
+  <div class="container">
+    <h1>Spare Parts Store</h1>
+    <p>Browse genuine Ampere spare parts. Body panels, lighting, hardware, and more &mdash; all available at Jai Mata Di Auto, Loni.</p>
+  </div>
+</section>
+
+<div class="sp-control-bar" id="spControlBar">
+  <div class="sp-control-inner">
+    <input type="search" class="sp-search" id="spSearch" placeholder="Search by name or part code..." autocomplete="off">
+    <div class="sp-cats" id="spCats"></div>
+    <div class="sp-model-row">
+      <span class="sp-model-label">Model:</span>
+      <div class="sp-models" id="spModels"></div>
+    </div>
+    <select class="sp-sort" id="spSort">
+      <option value="name-asc">Name A-Z</option>
+      <option value="name-desc">Name Z-A</option>
+      <option value="price-asc">Price Low-High</option>
+      <option value="price-desc">Price High-Low</option>
+    </select>
+  </div>
+</div>
+
+<section class="sp-section">
+  <div class="sp-stats" id="spStats">Loading parts...</div>
+  <div class="sp-grid" id="spGrid"></div>
+  <div class="sp-pagination" id="spPagination"></div>
+</section>
+
+<button class="sp-cart-toggle" id="spCartToggle" aria-label="Toggle cart">
+  <span class="sp-cart-toggle-icon">&#128722;</span>
+  <span class="sp-cart-count" id="spCartCount">0</span>
+</button>
+
+<div class="sp-cart-overlay" id="spCartOverlay"></div>
+<div class="sp-cart" id="spCart">
+  <div class="sp-cart-header">
+    <h3>Shopping Cart</h3>
+    <button class="sp-cart-close" id="spCartClose">&times;</button>
+  </div>
+  <div class="sp-cart-items" id="spCartItems">
+    <div class="sp-cart-empty">Your cart is empty.</div>
+  </div>
+  <div class="sp-cart-footer">
+    <div class="sp-cart-total">
+      <span>Total</span>
+      <span id="spCartTotal">&#8377;0</span>
+    </div>
+    <button class="sp-cart-checkout" id="spCheckoutBtn">Enquire via WhatsApp</button>
+  </div>
+</div>
+
+<section class="dealer-section" id="dealer">
+  <div class="container dealer-shell">
+    <div class="dealer-info-panel reveal-up">
+      <span class="eyebrow">Visit our showroom</span>
+      <h2 class="section-title">Jai Mata Di Auto, Loni</h2>
+      <p class="section-copy">Visit us to check spare part availability in person or order via WhatsApp for quick dispatch. We stock genuine Ampere components for Nexus, Magnus, and Reo models.</p>
+      <div class="dealer-meta-list">
+        <div class="dealer-meta-item">
+          <strong>Address</strong>
+          <span>Loni Babhaleshwar Road, Opp. Shivkanta Lawns, Near Dhanalaxmi Traders, Loni, Maharashtra - 413713</span>
+        </div>
+        <div class="dealer-meta-item">
+          <strong>Phone</strong>
+          <a href="tel:+919890202091">+91-9890202091</a>
+        </div>
+        <div class="dealer-meta-item">
+          <strong>Email</strong>
+          <span><a href="mailto:jmdanirmal91@gmail.com">jmdanirmal91@gmail.com</a></span>
+        </div>
+        <div class="dealer-meta-item">
+          <strong>Hours</strong>
+          <span>Monday to Saturday, 9:00 AM to 7:00 PM<br>Sunday, 10:00 AM to 5:00 PM</span>
+        </div>
+      </div>
+      <div class="dealer-cta-row">
+        <a href="https://wa.me/919890202091?text=Hi%2C%20I%20want%20to%20order%20spare%20parts%20for%20my%20Ampere%20scooter." target="_blank" rel="noopener noreferrer" class="btn-primary">Order on WhatsApp</a>
+        <a href="test-ride.html" class="btn-outline-dark">Book Test Ride</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-title">Jai Mata Di Auto</div>
+        <p class="footer-brand-copy">Authorized Ampere by Greaves dealer in Loni. Genuine spare parts and service support for all Ampere electric scooters.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Quick links</div>
+        <div class="footer-list">
+          <a href="index.html">Home</a>
+          <a href="models.html">All models</a>
+          <a href="spare-parts.html">Spare Parts</a>
+          <a href="test-ride.html">Book test ride</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Contact</div>
+        <div class="footer-list">
+          <span>Loni Babhaleshwar Road, Loni, Maharashtra - 413713</span>
+          <a href="tel:+919890202091">+91-9890202091</a>
+          <a href="mailto:jmdanirmal91@gmail.com">jmdanirmal91@gmail.com</a>
+          <a href="https://wa.me/919890202091?text=Hi%2C%20I%20need%20spare%20parts%20for%20my%20Ampere%20scooter." target="_blank" rel="noopener noreferrer">Order spare parts</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-note-row">
+      <p>&copy; 2026 Jai Mata Di Auto. Ampere and Greaves are registered trademarks of Greaves Electric Mobility Pvt. Ltd.</p>
+    </div>
+  </div>
+</footer>
+
+
+<script src="assets/js/spare-parts.js"></script>
+<script src="assets/js/script.js"></script>
+</body>
+</html>
